@@ -839,3 +839,21 @@ body{
   opacity: 0.8;
   line-height: 1;
 }
+
+/* 결혼 날짜(선택된 날짜) 가독성 강화 */
+.cal__day--wedding{
+  background: var(--accent);
+  color: #ffffff !important;      /* 글자 흰색으로 고정 */
+  font-weight: 600;
+}
+
+/* 토요일/일요일 색 규칙보다 결혼 날짜가 우선하도록 */
+.cal__day--wedding.cal__day--sat,
+.cal__day--wedding.cal__day--sun{
+  color: #ffffff !important;
+}
+
+/* (선택) 숫자를 더 또렷하게 하고 싶으면 */
+.cal__day--wedding{
+  text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+}
