@@ -510,8 +510,11 @@ function initShare(){
 }
 
 function initAnimations(){
-  // 섹션 FadeIn 적용
-  new FadeIn('.section.fade-in', { once: true });
+  // 섹션 FadeIn 적용 (더 일찍 트리거되도록 rootMargin 조정)
+  new FadeIn('.section.fade-in', { 
+    once: true,
+    rootMargin: '0px 0px -100px 0px' // 더 일찍 시작
+  });
   
   // 카운트다운 그리드 Stagger
   const countdownGrid = $('.countdown__grid');
@@ -519,11 +522,17 @@ function initAnimations(){
     Array.from(countdownGrid.children).forEach(item => {
       item.classList.add('stagger-item');
     });
-    new StaggerIn('.countdown__grid', { delay: 50 });
+    new StaggerIn('.countdown__grid', { 
+      delay: 80, // 간격 증가
+      rootMargin: '0px 0px -100px 0px'
+    });
   }
   
   // 갤러리 이미지 Stagger
-  new StaggerIn('.gallery', { delay: 30 });
+  new StaggerIn('.gallery', { 
+    delay: 50, // 간격 증가
+    rootMargin: '0px 0px -100px 0px'
+  });
   
   // 연락처 버튼 Stagger
   const contactGrid = $('.contactGrid');
@@ -531,11 +540,17 @@ function initAnimations(){
     Array.from(contactGrid.children).forEach(item => {
       item.classList.add('stagger-item');
     });
-    new StaggerIn('.contactGrid', { delay: 40 });
+    new StaggerIn('.contactGrid', { 
+      delay: 60, // 간격 증가
+      rootMargin: '0px 0px -100px 0px'
+    });
   }
   
   // 카드 ScaleIn
-  new FadeIn('.card.scale-in', { once: true });
+  new FadeIn('.card.scale-in', { 
+    once: true,
+    rootMargin: '0px 0px -100px 0px'
+  });
   
   // 버튼 그룹 Stagger
   const btnRows = $$('.btnRow');
@@ -543,7 +558,10 @@ function initAnimations(){
     Array.from(btnRow.children).forEach(item => {
       item.classList.add('stagger-item');
     });
-    new StaggerIn(btnRow, { delay: 60 });
+    new StaggerIn(btnRow, { 
+      delay: 80, // 간격 증가
+      rootMargin: '0px 0px -100px 0px'
+    });
   });
 }
 
