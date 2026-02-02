@@ -266,6 +266,7 @@ body{
   font-size: 15px;
   text-align: center;
   font-weight: 400;
+  white-space: pre-line;
 }
 
 /* Names - Venice 스타일 */
