@@ -405,6 +405,16 @@ body{
   border:0;
   display:block;
 }
+/* 카카오맵 스타일 */
+.root_daum_roughmap {
+  width: 100% !important;
+  height: 360px !important;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.root_daum_roughmap_landing {
+  width: 100% !important;
+}
 
 /* Buttons */
 .btnRow{
@@ -426,12 +436,20 @@ body{
   display:inline-flex;
   align-items:center;
   justify-content:center;
+  gap: 6px;
   min-width: 120px;
   font-weight: var(--weight-medium);
   transition: transform var(--duration-fast) var(--ease-out),
               box-shadow var(--duration-fast) var(--ease-out);
   box-shadow: var(--shadow-soft);
   -webkit-tap-highlight-color: transparent;
+}
+
+.btn__icon {
+  font-size: 18px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
 }
 .btn:hover{
   transform: translateY(-2px);
@@ -449,6 +467,37 @@ body{
 .btn--primary:hover{
   background: var(--accent-dark);
   border-color: var(--accent-dark);
+}
+
+/* 지도 버튼 스타일 */
+.btn--kakao {
+  background: #FEE500;
+  color: #000000;
+  border-color: #FEE500;
+}
+.btn--kakao:hover {
+  background: #FDD835;
+  border-color: #FDD835;
+}
+
+.btn--naver {
+  background: #03C75A;
+  color: #ffffff;
+  border-color: #03C75A;
+}
+.btn--naver:hover {
+  background: #02B350;
+  border-color: #02B350;
+}
+
+.btn--google {
+  background: #4285F4;
+  color: #ffffff;
+  border-color: #4285F4;
+}
+.btn--google:hover {
+  background: #357AE8;
+  border-color: #357AE8;
 }
 
 /* Details (accordion) - Venice 스타일 */

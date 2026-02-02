@@ -129,6 +129,7 @@ class FadeIn {
             observer.unobserve(entry.target);
           }
         } else if (!this.options.once) {
+          // 뷰포트를 벗어나면 다시 초기 상태로
           entry.target.classList.remove('visible');
         }
       });
@@ -168,12 +169,20 @@ class StaggerIn {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          // 각 아이템에 순차적으로 visible 클래스 추가
           this.items.forEach((item, index) => {
             setTimeout(() => {
               item.classList.add('visible');
             }, index * this.options.delay);
           });
-          observer.unobserve(entry.target);
+          if (this.options.once) {
+            observer.unobserve(entry.target);
+          }
+        } else if (!this.options.once) {
+          // 뷰포트를 벗어나면 다시 초기 상태로
+          this.items.forEach(item => {
+            item.classList.remove('visible');
+          });
         }
       });
     }, {
@@ -292,11 +301,8 @@ function initVenue(){
   setText("#venueAddress", INVITE.venue.address);
   setText("#transportText", INVITE.venue.transportText);
 
-  const mapFrame = $("#mapFrame");
-  if(mapFrame){
-    const q = encodeURIComponent(INVITE.venue.mapQuery || INVITE.venue.address);
-    mapFrame.src = `https://www.google.com/maps?q=${q}&output=embed`;
-  }
+  // 카카오맵은 HTML에서 직접 초기화되므로 여기서는 제거
+  // 카카오맵은 daum.roughmap.Lander로 자동 렌더링됨
 
   const btnKakao = $("#btnKakao");
   const btnNaver = $("#btnNaver");
@@ -519,20 +525,21 @@ function initShare(){
 }
 
 function initAnimations(){
-  // 섹션 FadeIn 적용 (더 일찍 트리거되도록 rootMargin 조정)
+  // 섹션 FadeIn 적용 - 스크롤 시마다 반복 (once: false)
   new FadeIn('.section.fade-in', { 
-    once: true,
-    rootMargin: '0px 0px -100px 0px' // 더 일찍 시작
+    once: false, // 스크롤 시마다 반복
+    rootMargin: '0px 0px -100px 0px'
   });
   
-  // 카운트다운 그리드 Stagger
+  // 카운트다운 그리드 Stagger - 스크롤 시마다 반복
   const countdownGrid = $('.countdown__grid');
   if (countdownGrid) {
     Array.from(countdownGrid.children).forEach(item => {
       item.classList.add('stagger-item');
     });
     new StaggerIn('.countdown__grid', { 
-      delay: 100, // 간격 증가
+      delay: 100,
+      once: false, // 스크롤 시마다 반복
       rootMargin: '0px 0px -100px 0px'
     });
   }
@@ -547,37 +554,40 @@ function initAnimations(){
       }
     });
     new StaggerIn('.gallery', { 
-      delay: 80, // 간격 증가
+      delay: 80,
+      once: false, // 스크롤 시마다 반복
       rootMargin: '0px 0px -100px 0px'
     });
   }
   
-  // 연락처 버튼 Stagger
+  // 연락처 버튼 Stagger - 스크롤 시마다 반복
   const contactGrid = $('.contactGrid');
   if (contactGrid) {
     Array.from(contactGrid.children).forEach(item => {
       item.classList.add('stagger-item');
     });
     new StaggerIn('.contactGrid', { 
-      delay: 80, // 간격 증가
+      delay: 80,
+      once: false, // 스크롤 시마다 반복
       rootMargin: '0px 0px -100px 0px'
     });
   }
   
-  // 카드 ScaleIn
+  // 카드 ScaleIn - 스크롤 시마다 반복
   new FadeIn('.card.scale-in', { 
-    once: true,
+    once: false, // 스크롤 시마다 반복
     rootMargin: '0px 0px -100px 0px'
   });
   
-  // 버튼 그룹 Stagger
+  // 버튼 그룹 Stagger - 스크롤 시마다 반복
   const btnRows = $$('.btnRow');
   btnRows.forEach(btnRow => {
     Array.from(btnRow.children).forEach(item => {
       item.classList.add('stagger-item');
     });
     new StaggerIn(btnRow, { 
-      delay: 100, // 간격 증가
+      delay: 100,
+      once: false, // 스크롤 시마다 반복
       rootMargin: '0px 0px -100px 0px'
     });
   });
@@ -598,9 +608,10 @@ function initGalleryAnimations(){
     }
   });
   
-  // StaggerIn 초기화
+  // StaggerIn 초기화 - 스크롤 시마다 반복
   new StaggerIn('.gallery', { 
     delay: 80,
+    once: false, // 스크롤 시마다 반복
     rootMargin: '0px 0px -100px 0px'
   });
 }
