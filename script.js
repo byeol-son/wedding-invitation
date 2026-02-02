@@ -92,6 +92,98 @@ const INVITE = {
 
 // ====== 아래부터는 로직(웬만하면 수정하지 마세요) ======
 const $ = (sel) => document.querySelector(sel);
+const $$ = (sel) => document.querySelectorAll(sel);
+
+// ============================================
+// 모션 컴포넌트 (Motion Components)
+// ============================================
+
+/**
+ * IntersectionObserver 기반 FadeIn 컴포넌트
+ * 스크롤 시 요소가 뷰포트에 들어오면 fade + slide up 애니메이션
+ */
+class FadeIn {
+  constructor(selector, options = {}) {
+    this.elements = $$(selector);
+    this.options = {
+      rootMargin: options.rootMargin || '0px 0px -80px 0px',
+      threshold: options.threshold || 0.1,
+      once: options.once !== false, // 기본값: true
+      ...options
+    };
+    this.init();
+  }
+
+  init() {
+    if (!this.elements.length || !window.IntersectionObserver) {
+      // IntersectionObserver 미지원 시 즉시 표시
+      this.elements.forEach(el => el.classList.add('visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (this.options.once) {
+            observer.unobserve(entry.target);
+          }
+        } else if (!this.options.once) {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, this.options);
+
+    this.elements.forEach(el => observer.observe(el));
+  }
+}
+
+/**
+ * StaggerIn 컴포넌트
+ * 그룹 내 요소들이 순차적으로 등장
+ */
+class StaggerIn {
+  constructor(selector, options = {}) {
+    this.container = $(selector);
+    if (!this.container) return;
+    
+    this.items = Array.from(this.container.children);
+    this.options = {
+      delay: options.delay || 50, // 요소 간 간격 (ms)
+      rootMargin: options.rootMargin || '0px 0px -80px 0px',
+      threshold: options.threshold || 0.1,
+      ...options
+    };
+    this.init();
+  }
+
+  init() {
+    if (!this.items.length || !window.IntersectionObserver) {
+      this.items.forEach((el, i) => {
+        setTimeout(() => el.classList.add('visible'), i * this.options.delay);
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          this.items.forEach((item, index) => {
+            setTimeout(() => {
+              item.classList.add('visible');
+            }, index * this.options.delay);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      rootMargin: this.options.rootMargin,
+      threshold: this.options.threshold
+    });
+
+    observer.observe(this.container);
+  }
+}
 
 function setText(id, value){ const el = $(id); if(el) el.textContent = value; }
 
@@ -224,8 +316,42 @@ function initContacts(){
   $("#smsBride").addEventListener("click", () => location.href = `sms:${bride.phone}`);
 }
 
+/**
+ * Toast 컴포넌트
+ * 복사 성공 등의 피드백 메시지 표시
+ */
+class Toast {
+  constructor(message, duration = 2000) {
+    this.message = message;
+    this.duration = duration;
+    this.show();
+  }
+
+  show() {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = this.message;
+    document.body.appendChild(toast);
+
+    // 애니메이션을 위해 다음 프레임에 추가
+    requestAnimationFrame(() => {
+      toast.classList.add('visible');
+    });
+
+    setTimeout(() => {
+      toast.classList.remove('visible');
+      setTimeout(() => {
+        document.body.removeChild(toast);
+      }, 150);
+    }, this.duration);
+  }
+}
+
 function copyToClipboard(text){
   return navigator.clipboard?.writeText(text)
+    .then(() => {
+      new Toast('복사되었습니다');
+    })
     .catch(() => {
       // clipboard API 실패 시 fallback
       const ta = document.createElement("textarea");
@@ -236,6 +362,7 @@ function copyToClipboard(text){
       ta.select();
       document.execCommand("copy");
       document.body.removeChild(ta);
+      new Toast('복사되었습니다');
     });
 }
 
@@ -263,8 +390,6 @@ function renderAccounts(list, mountSel){
     btn.textContent = "복사";
     btn.addEventListener("click", async () => {
       await copyToClipboard(`${a.bank} ${a.number}`);
-      btn.textContent = "복사됨";
-      setTimeout(()=> btn.textContent = "복사", 900);
     });
 
     row.appendChild(left);
@@ -310,8 +435,9 @@ function initGallery(){
 
   fullPaths.forEach((src, idx) => {
     const img = document.createElement("img");
-    img.className = "gallery__img";
+    img.className = "gallery__img stagger-item";
     img.loading = "lazy";
+    img.decoding = "async";
     img.src = src;
     img.alt = `갤러리 ${idx+1}`;
     img.addEventListener("click", () => openLightbox(idx));
@@ -369,8 +495,6 @@ function initShare(){
 
   copyBtn.addEventListener("click", async () => {
     await copyToClipboard(getUrl());
-    copyBtn.textContent = "복사됨";
-    setTimeout(()=> copyBtn.textContent = "URL 복사하기", 900);
   });
 
   shareBtn.addEventListener("click", async () => {
@@ -382,8 +506,44 @@ function initShare(){
       return;
     }
     await copyToClipboard(url);
-    shareBtn.textContent = "URL 복사됨";
-    setTimeout(()=> shareBtn.textContent = "공유하기", 900);
+  });
+}
+
+function initAnimations(){
+  // 섹션 FadeIn 적용
+  new FadeIn('.section.fade-in', { once: true });
+  
+  // 카운트다운 그리드 Stagger
+  const countdownGrid = $('.countdown__grid');
+  if (countdownGrid) {
+    Array.from(countdownGrid.children).forEach(item => {
+      item.classList.add('stagger-item');
+    });
+    new StaggerIn('.countdown__grid', { delay: 50 });
+  }
+  
+  // 갤러리 이미지 Stagger
+  new StaggerIn('.gallery', { delay: 30 });
+  
+  // 연락처 버튼 Stagger
+  const contactGrid = $('.contactGrid');
+  if (contactGrid) {
+    Array.from(contactGrid.children).forEach(item => {
+      item.classList.add('stagger-item');
+    });
+    new StaggerIn('.contactGrid', { delay: 40 });
+  }
+  
+  // 카드 ScaleIn
+  new FadeIn('.card.scale-in', { once: true });
+  
+  // 버튼 그룹 Stagger
+  const btnRows = $$('.btnRow');
+  btnRows.forEach(btnRow => {
+    Array.from(btnRow.children).forEach(item => {
+      item.classList.add('stagger-item');
+    });
+    new StaggerIn(btnRow, { delay: 60 });
   });
 }
 
@@ -399,6 +559,7 @@ function main(){
   renderAccounts(INVITE.accounts.brideSide, "#brideAccounts");
   initGallery();
   initShare();
+  initAnimations(); // 모션 초기화
 }
 
 document.addEventListener("DOMContentLoaded", main);
