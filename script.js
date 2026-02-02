@@ -25,7 +25,7 @@ const INVITE = {
     groom: { 
       name: "신현욱",                    // 신랑 이름
       phone: "010-8734-5621",         // 신랑 전화번호
-      parentsLine: "아버지 · 어머니 의 아들"  // 신랑 부모님 정보
+      parentsLine: "신유열 · 장옥순 의 아들"  // 신랑 부모님 정보
     },
     bride: { 
       name: "손별",                    // 신부 이름
@@ -80,11 +80,11 @@ const INVITE = {
   accounts: {
     groomSide: [
       { label: "신랑", bank: "OO은행", number: "000-0000-0000-00" },
-     // { label: "혼주(부)", bank: "OO은행", number: "000-0000-0000-00" },
+      { label: "혼주(부)", bank: "OO은행", number: "000-0000-0000-00" },
     ],
     brideSide: [
       { label: "손별", bank: "신한 은행", number: "110-385-059931" },
-     // { label: "혼주(모)", bank: "OO은행", number: "000-0000-0000-00" },
+      { label: "혼주(모)", bank: "OO은행", number: "000-0000-0000-00" },
     ],
   },
 
