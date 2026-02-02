@@ -1,15 +1,15 @@
 // ====== 여기만 수정하면 됩니다 (설정) ======
 const INVITE = {
   hero: {
-    title: "손별 ❤️ OOO",
-    dateText: "2026년 00월 00일 토요일 오후 0시",
-    placeText: "예식장명, 홀",
+    title: "신현욱 ❤️ 손별",
+    dateText: "2026년 7월 4일 토요일 오후 3시",
+    placeText: "세인트메리엘, 세인트홀",
     kicker: "Wedding Invitation",
     // 대표 사진: ./images/main.jpg 파일을 교체하면 됨
   },
   couple: {
-    groom: { name: "신랑", phone: "010-0000-0000", parentsLine: "아버지 · 어머니 의 아들" },
-    bride: { name: "신부", phone: "010-0000-0000", parentsLine: "아버지 · 어머니 의 딸" },
+    groom: { name: "신랑", phone: "010-8734-5621", parentsLine: "아버지 · 어머니 의 아들" },
+    bride: { name: "신부", phone: "010-8200-1913", parentsLine: "아버지 · 어머니 의 딸" },
   },
   invitationText:
     "한 줄기 별빛이 되어 만난 인연, 평생을 함께 걸어가려 합니다. 소중한 분들의 축복 속에 저희 두 사람이 첫 걸음을 내딛습니다. 귀한 시간 내어 함께해 주신다면 그 어떤 축복보다 값진 선물이 될 것입니다.",
