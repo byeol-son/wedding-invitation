@@ -13,6 +13,11 @@
   <meta property="og:image" content="./images/og.jpg" />
   <meta property="og:url" content="" />
 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Great+Vibes&family=Inter:wght@300;400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -20,17 +25,22 @@
     <!-- HERO -->
     <section class="hero" aria-label="초대장 표지">
       <div class="hero__bg" role="img" aria-label="대표 사진"></div>
-      <!-- 상단 텍스트 -->
-      <div class="hero__top">
-        <p class="hero__kicker" id="heroKicker">Wedding Invitation</p>
-        <h1 class="hero__title" id="heroTitle">신랑 ❤️ 신부</h1>
+      <!-- 상단: 날짜/시간/장소 좌-중-우 정렬 -->
+      <div class="hero__top-info">
+        <span class="hero__date" id="heroDate">2026.07.04</span>
+        <span class="hero__time" id="heroTime">3:00 PM</span>
+        <span class="hero__venue-top" id="heroVenueTop">SAINTMERIEL</span>
       </div>
-      <!-- 하단 텍스트 -->
-      <div class="hero__bottom">
-        <p class="hero__meta" id="heroMeta">2026년 00월 00일 토요일 오후 0시</p>
-        <p class="hero__place" id="heroPlace">예식장명, 홀</p>
+      <!-- 중앙: 손글씨 스크립트 -->
+      <div class="hero__center">
+        <h1 class="hero__script" id="heroScript">We are getting married</h1>
       </div>
-      <div class="hero__fade"></div>
+      <!-- 하단: 이름과 장소 -->
+      <div class="hero__bottom-info">
+        <p class="hero__names" id="heroNames">신현욱 · 손별</p>
+        <p class="hero__venue" id="heroVenue">세인트메리엘, 세인트홀</p>
+      </div>
+      <div class="hero__dimm"></div>
     </section>
 
     <!-- INVITATION TEXT -->

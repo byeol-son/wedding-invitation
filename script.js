@@ -197,10 +197,35 @@ class StaggerIn {
 function setText(id, value){ const el = $(id); if(el) el.textContent = value; }
 
 function initHero(){
-  setText("#heroKicker", INVITE.hero.kicker);
-  setText("#heroTitle", INVITE.hero.title);
-  setText("#heroMeta", INVITE.hero.dateText);
-  setText("#heroPlace", INVITE.hero.placeText);
+  // 날짜 포맷팅 (2026년 7월 4일 → 2026.07.04)
+  const dateMatch = INVITE.hero.dateText.match(/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
+  if (dateMatch) {
+    const year = dateMatch[1];
+    const month = String(dateMatch[2]).padStart(2, '0');
+    const day = String(dateMatch[3]).padStart(2, '0');
+    setText("#heroDate", `${year}.${month}.${day}`);
+  }
+  
+  // 시간 추출 (오후 3시 → 3:00 PM)
+  const timeMatch = INVITE.hero.dateText.match(/(오전|오후)\s*(\d{1,2})시/);
+  if (timeMatch) {
+    const ampm = timeMatch[1] === '오전' ? 'AM' : 'PM';
+    const hour = parseInt(timeMatch[2]);
+    setText("#heroTime", `${hour}:00 ${ampm}`);
+  }
+  
+  // 장소명 대문자 변환
+  const venueName = INVITE.hero.placeText.split(',')[0].trim().toUpperCase();
+  setText("#heroVenueTop", venueName);
+  
+  // 중앙 스크립트
+  setText("#heroScript", "We are getting married");
+  
+  // 하단 이름
+  setText("#heroNames", INVITE.hero.title.replace('❤️', '·'));
+  
+  // 하단 장소
+  setText("#heroVenue", INVITE.hero.placeText);
 }
 
 function initNames(){
