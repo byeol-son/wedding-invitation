@@ -185,8 +185,8 @@ body{
 .hero__script{
   margin: 0;
   font-family: 'Allura', 'Great Vibes', cursive;
-  font-size: clamp(42px, 8vw, 64px);
-  font-weight: 400;
+  font-size: clamp(50px, 8vw, 64px);
+  font-weight: 500;
   color: #F7F6F2;
   text-shadow: 0 2px 12px rgba(0,0,0,0.20);
   text-align: center;
@@ -209,16 +209,16 @@ body{
 
 .hero__names{
   margin: 0 0 8px;
-  font-size: 16px;
+  font-size: 18px;
   letter-spacing: 0.1em; /* +100 */
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .hero__venue{
   margin: 0;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.12em; /* +120 */
-  font-weight: 300;
+  font-weight: 400;
   text-transform: uppercase;
 }
 
