@@ -1,0 +1,8 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# 이미지 파일은 커밋에 포함 (사용자가 직접 관리)
