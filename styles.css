@@ -857,3 +857,66 @@ body{
 .cal__day--wedding{
   text-shadow: 0 1px 2px rgba(0,0,0,0.18);
 }
+
+/* 공통: btnRow는 항상 가운데 정렬 */
+.btnRow{
+  display: flex;
+  justify-content: center;  /* 묶음 자체가 페이지 가운데 */
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* 1) 지도 버튼 3개: 무조건 1행(줄바꿈 금지) */
+.btnRow--map{
+  flex-wrap: nowrap;        /* 1행 고정 */
+  overflow-x: auto;         /* 작은 화면에서 넘치면 가로 스크롤 */
+  -webkit-overflow-scrolling: touch;
+  padding: 0 16px;          /* 스크롤 여유 */
+}
+
+/* 스크롤바 안 보이게(선택) */
+.btnRow--map::-webkit-scrollbar{ display:none; }
+.btnRow--map{ scrollbar-width: none; }
+
+/* 2) 공유 버튼 2개: 가운데 정렬(기본 btnRow로 충분) */
+.btnRow--share{
+  flex-wrap: nowrap;        /* 웬만하면 1행 유지 */
+}
+
+/* 3) 지도 버튼을 '공유 버튼' 같은 무드로 통일
+   -> 기존 카카오/네이버/구글의 컬러 배경을 덮어씁니다. */
+.btnRow--map .btn,
+.btnRow--share .btn{
+  background: #ffffff;
+  color: #2b2b2b;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 14px;
+  padding: 12px 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  line-height: 1;
+  white-space: nowrap;      /* 텍스트 줄바꿈 방지 */
+}
+
+/* 지도 버튼(3개)은 폭을 너무 크게 잡지 않게 */
+.btnRow--map .btn{
+  min-width: 118px;         /* 110~140 사이 취향 */
+}
+
+/* 아이콘이 위/아래로 틀어지면 이거로 고정 */
+.btn__icon{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* (선택) primary 버튼만 포인트 컬러 유지 — 공유의 '공유하기' 같은 느낌 */
+.btnRow--share .btn--primary{
+  background: var(--accent);
+  color: #fff;
+  border-color: transparent;
+}
