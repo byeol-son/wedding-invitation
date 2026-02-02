@@ -111,7 +111,7 @@ body{
   background: var(--bg);
 }
 
-/* HERO - Venice 스타일 (사진 크롭 및 상하단 배치) */
+/* HERO - 미니멀 감성 타이포그래피 */
 .hero{
   position: relative;
   height: 100vh;
@@ -124,67 +124,108 @@ body{
 }
 .hero__bg{
   position:absolute; inset:0;
-  background:
-    linear-gradient(to bottom, rgba(0,0,0,.3) 0%, rgba(0,0,0,.15) 15%, rgba(0,0,0,.05) 30%, rgba(0,0,0,0) 50%, rgba(0,0,0,.05) 70%, rgba(0,0,0,.15) 85%, rgba(0,0,0,.3) 100%),
-    url("./images/main.jpg") center 40%/cover no-repeat;
+  background: url("./images/main.jpg") center 40%/cover no-repeat;
   transform: scale(1.03);
   transition: transform 0.6s ease;
-  /* Venice 스타일: 얼굴이 잘 보이도록 상단 40% 위치에서 크롭 */
 }
-/* 상단 텍스트 영역 */
-.hero__top{
+
+/* 상단: 날짜/시간/장소 좌-중-우 정렬 */
+.hero__top-info{
   position: relative;
-  padding: 50px 24px 0;
-  text-align: center;
-  color:#fff;
-  text-shadow: 0 2px 20px rgba(0,0,0,.4);
+  padding: 40px 24px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: #F7F6F2;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.20);
   z-index: 2;
   flex-shrink: 0;
-}
-.hero__kicker{
-  margin: 0 0 12px;
-  letter-spacing:.15em;
+  font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;
+  font-weight: 300;
   font-size: 11px;
-  opacity:.95;
-  font-weight: 500;
+  letter-spacing: 0.08em; /* +80 */
   text-transform: uppercase;
 }
-.hero__title{
-  margin: 0;
-  font-weight: 400;
-  font-size: 38px;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  font-family: "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+
+.hero__date,
+.hero__time,
+.hero__venue-top{
+  flex: 1;
 }
-/* 하단 텍스트 영역 */
-.hero__bottom{
-  position: relative;
-  padding: 0 24px 60px;
+
+.hero__date{
+  text-align: left;
+}
+
+.hero__time{
   text-align: center;
-  color:#fff;
-  text-shadow: 0 2px 20px rgba(0,0,0,.4);
-  z-index: 2;
-  flex-shrink: 0;
 }
-.hero__meta{
-  margin: 0 0 8px;
-  font-size: 16px;
-  opacity:.98;
-  font-weight: 500;
+
+.hero__venue-top{
+  text-align: right;
+}
+
+/* 중앙: 손글씨 스크립트 */
+.hero__center{
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  z-index: 2;
+}
+
+.hero__script{
+  margin: 0;
+  font-family: 'Allura', 'Great Vibes', cursive;
+  font-size: clamp(42px, 8vw, 64px);
+  font-weight: 400;
+  color: #F7F6F2;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.20);
+  text-align: center;
+  line-height: 1.2;
   letter-spacing: 0.02em;
 }
-.hero__place{
-  margin: 0;
-  font-size: 15px;
-  opacity:.95;
-  font-weight: 400;
+
+/* 하단: 이름과 장소 */
+.hero__bottom-info{
+  position: relative;
+  padding: 0 24px 50px;
+  text-align: center;
+  color: #F7F6F2;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.20);
+  z-index: 2;
+  flex-shrink: 0;
+  font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;
+  font-weight: 300;
 }
-.hero__fade{
-  position:absolute; left:0; right:0; bottom:0;
-  height: 200px;
-  background: linear-gradient(to bottom, rgba(250,249,246,0), rgba(250,249,246,0.9) 50%, rgba(250,249,246,1));
+
+.hero__names{
+  margin: 0 0 8px;
+  font-size: 16px;
+  letter-spacing: 0.1em; /* +100 */
+  font-weight: 300;
+}
+
+.hero__venue{
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.12em; /* +120 */
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+/* 하단 40% 영역 딤드 그라데이션 */
+.hero__dimm{
+  position:absolute; 
+  left:0; 
+  right:0; 
+  bottom:0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(8,12,20,0.40) 0%, rgba(8,12,20,0.30) 30%, rgba(8,12,20,0.15) 60%, rgba(8,12,20,0) 100%);
   z-index: 1;
+  pointer-events: none;
 }
 
 /* SECTION - Venice 스타일 */
