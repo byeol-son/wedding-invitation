@@ -1,4 +1,4 @@
-# wedding invitation (정적 페이지 템플릿)
+# wedding invitation 
 
 ## 1) 빠른 수정 포인트
 - `script.js` 상단의 `INVITE` 설정만 바꾸면 대부분 끝납니다.
