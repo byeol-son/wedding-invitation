@@ -73,7 +73,7 @@ const INVITE = {
   // ========== 참석 의사 전달 ==========
   rsvp: {
     // 구글폼 링크 추천 (없으면 '#'로 두면 됨)
-    formUrl: "https://forms.gle/",
+    formUrl: "https://forms.gle/pJCxp9tg9rurkp9p6",
   },
 
   // ========== 계좌번호 ==========
