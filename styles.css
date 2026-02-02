@@ -644,12 +644,12 @@ body{
    모션 유틸리티 클래스
    ============================================ */
 
-/* Fade In (초기 상태) - 가시성 개선 */
+/* Fade In (초기 상태) - 가시성 개선 (지속시간 증가) */
 .fade-in {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 800ms var(--ease-out),
-              transform 800ms var(--ease-out);
+  transition: opacity 1000ms var(--ease-out),
+              transform 1000ms var(--ease-out);
 }
 
 .fade-in.visible {
@@ -657,12 +657,12 @@ body{
   transform: translateY(0);
 }
 
-/* Stagger (순차 등장) - 가시성 개선 */
+/* Stagger (순차 등장) - 가시성 개선 (지속시간 증가) */
 .stagger-item {
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 600ms var(--ease-out),
-              transform 600ms var(--ease-out);
+  transition: opacity 800ms var(--ease-out),
+              transform 800ms var(--ease-out);
 }
 
 .stagger-item.visible {
@@ -670,12 +670,12 @@ body{
   transform: translateY(0);
 }
 
-/* Scale In (카드/버튼) - 가시성 개선 */
+/* Scale In (카드/버튼) - 가시성 개선 (지속시간 증가) */
 .scale-in {
   opacity: 0;
   transform: scale(0.92) translateY(20px);
-  transition: opacity 600ms var(--ease-out),
-              transform 600ms var(--ease-out);
+  transition: opacity 800ms var(--ease-out),
+              transform 800ms var(--ease-out);
 }
 
 .scale-in.visible {

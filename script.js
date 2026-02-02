@@ -441,8 +441,17 @@ function initGallery(){
     img.src = src;
     img.alt = `갤러리 ${idx+1}`;
     img.addEventListener("click", () => openLightbox(idx));
+    img.addEventListener("load", () => {
+      // 이미지 로드 후 애니메이션 초기화
+      if (idx === fullPaths.length - 1) {
+        setTimeout(() => initGalleryAnimations(), 100);
+      }
+    });
     mount.appendChild(img);
   });
+  
+  // 이미지가 이미 로드되어 있거나 빠르게 로드되는 경우를 대비
+  setTimeout(() => initGalleryAnimations(), 300);
 
   // lightbox
   const lb = $("#lightbox");
@@ -523,16 +532,25 @@ function initAnimations(){
       item.classList.add('stagger-item');
     });
     new StaggerIn('.countdown__grid', { 
-      delay: 80, // 간격 증가
+      delay: 100, // 간격 증가
       rootMargin: '0px 0px -100px 0px'
     });
   }
   
-  // 갤러리 이미지 Stagger
-  new StaggerIn('.gallery', { 
-    delay: 50, // 간격 증가
-    rootMargin: '0px 0px -100px 0px'
-  });
+  // 갤러리 이미지 Stagger (이미지가 로드된 후 초기화)
+  const gallery = $('.gallery');
+  if (gallery && gallery.children.length > 0) {
+    // 이미지가 이미 로드되어 있는 경우
+    Array.from(gallery.children).forEach(item => {
+      if (item.tagName === 'IMG') {
+        item.classList.add('stagger-item');
+      }
+    });
+    new StaggerIn('.gallery', { 
+      delay: 80, // 간격 증가
+      rootMargin: '0px 0px -100px 0px'
+    });
+  }
   
   // 연락처 버튼 Stagger
   const contactGrid = $('.contactGrid');
@@ -541,7 +559,7 @@ function initAnimations(){
       item.classList.add('stagger-item');
     });
     new StaggerIn('.contactGrid', { 
-      delay: 60, // 간격 증가
+      delay: 80, // 간격 증가
       rootMargin: '0px 0px -100px 0px'
     });
   }
@@ -559,9 +577,31 @@ function initAnimations(){
       item.classList.add('stagger-item');
     });
     new StaggerIn(btnRow, { 
-      delay: 80, // 간격 증가
+      delay: 100, // 간격 증가
       rootMargin: '0px 0px -100px 0px'
     });
+  });
+}
+
+function initGalleryAnimations(){
+  // 갤러리 이미지가 동적으로 생성된 후 애니메이션 초기화
+  const gallery = $('.gallery');
+  if (!gallery) return;
+  
+  const images = gallery.querySelectorAll('.gallery__img');
+  if (images.length === 0) return;
+  
+  // 각 이미지에 stagger-item 클래스 추가 (이미 추가되어 있을 수도 있음)
+  images.forEach(img => {
+    if (!img.classList.contains('stagger-item')) {
+      img.classList.add('stagger-item');
+    }
+  });
+  
+  // StaggerIn 초기화
+  new StaggerIn('.gallery', { 
+    delay: 80,
+    rootMargin: '0px 0px -100px 0px'
   });
 }
 
@@ -577,7 +617,7 @@ function main(){
   renderAccounts(INVITE.accounts.brideSide, "#brideAccounts");
   initGallery();
   initShare();
-  initAnimations(); // 모션 초기화
+  initAnimations(); // 모션 초기화 (갤러리 제외)
 }
 
 document.addEventListener("DOMContentLoaded", main);
