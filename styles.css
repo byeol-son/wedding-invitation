@@ -165,15 +165,21 @@ body{
   text-align: right;
 }
 
-/* 중앙: 손글씨 스크립트 */
+/* 중앙: 손글씨 스크립트 (위로 올린 버전) */
 .hero__center{
-  position: relative;
-  flex: 1;
+  position: absolute;
+  left: 0;
+  right: 0;
+
+  /* 여기 숫자만 조절하면 위치가 바뀝니다 */
+  top: calc(28% + env(safe-area-inset-top));
+  transform: translateY(-50%);
+
   display: flex;
-  align-items: center;
   justify-content: center;
   padding: 0 24px;
   z-index: 2;
+  pointer-events: none;
 }
 
 .hero__script{
