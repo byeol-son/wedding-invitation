@@ -23,12 +23,12 @@ const INVITE = {
   // ========== 신랑/신부 정보 ==========
   couple: {
     groom: { 
-      name: "신랑",                    // 신랑 이름
+      name: "신현욱",                    // 신랑 이름
       phone: "010-8734-5621",         // 신랑 전화번호
       parentsLine: "아버지 · 어머니 의 아들"  // 신랑 부모님 정보
     },
     bride: { 
-      name: "신부",                    // 신부 이름
+      name: "손별",                    // 신부 이름
       phone: "010-8200-1913",         // 신부 전화번호
       parentsLine: "아버지 · 어머니 의 딸"   // 신부 부모님 정보
     },
@@ -41,24 +41,24 @@ const INVITE = {
   // ========== 예식 일정 ==========
   schedule: {
     // ISO 형태로 정확히 입력 (한국시간 기준)
-    // 형식: "YYYY-MM-DDTHH:mm:ss+09:00"
+    // 형식: "202-MM-DDTHH:mm:ss+09:00"
     // 예: "2026-07-04T15:00:00+09:00" (2026년 7월 4일 오후 3시)
     weddingDateTime: "2026-07-04T15:00:00+09:00",
   },
 
   // ========== 예식장 정보 ==========
   venue: {
-    name: "예식장명",                    // 예식장 이름
-    hall: "홀 정보(층/홀)",              // 홀 정보 (예: "3층 그랜드홀")
-    address: "서울시 OO구 OO로 00, OO빌딩",  // 예식장 주소
+    name: "세인트메리엘",                    // 예식장 이름
+    hall: "2층 세인트홀",              // 홀 정보 (예: "3층 그랜드홀")
+    address: "서울특별시 강남구 논현로79길 72 올림피아센터빌딩",  // 예식장 주소
     
     // 지도/길찾기 링크 (원하는 것만 채우기)
-    kakaoMapUrl: "https://map.kakao.com/", 
-    naverMapUrl: "https://map.naver.com/",
-    googleMapUrl: "https://maps.google.com/",
+    kakaoMapUrl: "https://place.map.kakao.com/1478744978", 
+    naverMapUrl: "https://naver.me/5JpUFe0x",
+    googleMapUrl: "https://maps.app.goo.gl/8qyrqcgVFLrNsWF87",
     
     // 구글 지도 iframe용 검색어 (주소를 넣으면 됨)
-    mapQuery: "서울시 OO구 OO로 00 예식장명",
+    mapQuery: "서울특별시 강남구 논현로79길 72 세인트메리엘",
     
     // 교통/주차 안내 (줄바꿈은 \n 사용)
     transportText: "예: 2호선 OO역 3번 출구 도보 5분\n주차: 지하 2-4층 무료 2시간\n셔틀: OO역 1번 출구 앞 20분 간격",
@@ -74,11 +74,11 @@ const INVITE = {
   accounts: {
     groomSide: [
       { label: "신랑", bank: "OO은행", number: "000-0000-0000-00" },
-      { label: "혼주(부)", bank: "OO은행", number: "000-0000-0000-00" },
+     // { label: "혼주(부)", bank: "OO은행", number: "000-0000-0000-00" },
     ],
     brideSide: [
-      { label: "신부", bank: "OO은행", number: "000-0000-0000-00" },
-      { label: "혼주(모)", bank: "OO은행", number: "000-0000-0000-00" },
+      { label: "손별", bank: "신한은행", number: "110-385-059931" },
+     // { label: "혼주(모)", bank: "OO은행", number: "000-0000-0000-00" },
     ],
   },
 
