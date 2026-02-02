@@ -81,9 +81,11 @@
   
   /* === 애니메이션 === */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --duration-fast: 200ms;
   --duration-normal: 400ms;
   --duration-slow: 600ms;
+  --duration-slower: 800ms;
   
   /* 레거시 호환 */
   --radius: var(--radius-lg);
@@ -483,12 +485,12 @@ body{
   font-size: var(--text-base);
   border-top: 1px solid var(--line);
   font-weight: var(--weight-normal);
-  animation: slideDown 300ms var(--ease-out);
+  animation: slideDown 400ms var(--ease-out);
 }
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-16px);
   }
   to {
     opacity: 1;
@@ -581,13 +583,13 @@ body{
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255,255,255,.12);
   opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 350ms var(--ease-out),
-              transform 350ms var(--ease-out);
+  transform: scale(0.85) translateY(20px);
+  transition: opacity 500ms var(--ease-out),
+              transform 500ms var(--ease-out);
 }
 .lightbox[aria-hidden="false"] .lightbox__img{
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
 }
 .lightbox__close{
   position:absolute;
@@ -642,12 +644,12 @@ body{
    모션 유틸리티 클래스
    ============================================ */
 
-/* Fade In (초기 상태) */
+/* Fade In (초기 상태) - 가시성 개선 */
 .fade-in {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity var(--duration-slow) var(--ease-out),
-              transform var(--duration-slow) var(--ease-out);
+  transform: translateY(40px);
+  transition: opacity 800ms var(--ease-out),
+              transform 800ms var(--ease-out);
 }
 
 .fade-in.visible {
@@ -655,12 +657,12 @@ body{
   transform: translateY(0);
 }
 
-/* Stagger (순차 등장) */
+/* Stagger (순차 등장) - 가시성 개선 */
 .stagger-item {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity var(--duration-normal) var(--ease-out),
-              transform var(--duration-normal) var(--ease-out);
+  transform: translateY(30px);
+  transition: opacity 600ms var(--ease-out),
+              transform 600ms var(--ease-out);
 }
 
 .stagger-item.visible {
@@ -668,17 +670,17 @@ body{
   transform: translateY(0);
 }
 
-/* Scale In (카드/버튼) */
+/* Scale In (카드/버튼) - 가시성 개선 */
 .scale-in {
   opacity: 0;
-  transform: scale(0.96);
-  transition: opacity var(--duration-normal) var(--ease-out),
-              transform var(--duration-normal) var(--ease-out);
+  transform: scale(0.92) translateY(20px);
+  transition: opacity 600ms var(--ease-out),
+              transform 600ms var(--ease-out);
 }
 
 .scale-in.visible {
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
 }
 
 /* prefers-reduced-motion 대응 */
