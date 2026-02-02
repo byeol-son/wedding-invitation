@@ -102,17 +102,16 @@ class FadeIn {
 }
 
 class StaggerIn {
-  constructor(selector, options = {}) {
-    // ⭐ 핵심 수정: selector가 문자열이 아니면 바로 사용하도록 함
-    this.container = (typeof selector === 'string') ? document.querySelector(selector) : selector;
+  constructor(target, options = {}) {
+    this.container = (typeof target === 'string') ? $(target) : target;
     if (!this.container) return;
-    
+
     this.items = Array.from(this.container.children);
     this.options = {
       delay: options.delay || 50,
       rootMargin: options.rootMargin || '0px 0px -80px 0px',
       threshold: options.threshold || 0.1,
-      once: options.once !== false,
+      once: options.once !== false,   // 기본 true, false면 반복
       ...options
     };
     this.init();
@@ -130,16 +129,17 @@ class StaggerIn {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           this.items.forEach((item, index) => {
-            setTimeout(() => {
-              item.classList.add('visible');
-            }, index * this.options.delay);
+            setTimeout(() => item.classList.add('visible'), index * this.options.delay);
           });
           if (this.options.once) observer.unobserve(entry.target);
         } else if (!this.options.once) {
           this.items.forEach(item => item.classList.remove('visible'));
         }
       });
-    }, this.options);
+    }, {
+      rootMargin: this.options.rootMargin,
+      threshold: this.options.threshold
+    });
 
     observer.observe(this.container);
   }
