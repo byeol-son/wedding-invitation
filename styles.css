@@ -353,7 +353,7 @@ body{
 .cal__day{background: transparent;}
 .cal__day--wedding{
   background: var(--accent);
-  color:#fff;
+  color: #ffffff !important
   font-weight: 500;
 }
 .cal__day--sun{color:#d4a574;}
