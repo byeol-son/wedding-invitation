@@ -285,18 +285,20 @@ body{
 }
 /* 신랑/신부 사이 간격 + 하트 위치 정렬 */
 .names__row + .names__row{
-  margin-top: 18px;   /* 기존 24px → 줄여서 여백 정리 */
-  padding-top: 18px;  /* 기존 24px → 줄여서 여백 정리 */
+  margin-top: 18px;
+  padding-top: 18px;
 }
 
 .names__row + .names__row::before{
-  top: 0;                              /* 두 번째 줄의 시작점 기준 */
+  content: "❤";                 /* 이거 없으면 하트가 아예 안 생김 */
+  position: absolute;           /* absolute 없으면 top/left가 의미 없음 */
+  top: 0;
   left: 50%;
-  transform: translate(-50%, -50%);    /* 위로 반 칸 올려서 '사이 중앙'에 오게 */
+  transform: translate(-50%, -50%);
   font-size: 18px;
-  /* 색도 맞추고 싶으면 아래 중 하나 사용 */
-  /* color: var(--accent); */
-  /* color: #b89f7a; */
+  line-height: 1;
+  color: var(--accent);         /* 원하는 색 */
+  pointer-events: none;
 }
 .names__parents{
   color: var(--muted);
