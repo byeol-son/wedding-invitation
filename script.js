@@ -16,7 +16,7 @@ const INVITE = {
     groom: { 
       name: "신현욱", 
       phone: "010-8734-5621", 
-      parentsLine: "신유열 · 장옥순 의 장남" 
+      parentsLine: "신유열 · 장옥수 의 장남" 
     },
     bride: { 
       name: "손별", 
