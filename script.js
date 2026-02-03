@@ -171,7 +171,7 @@ function setText(id, value){ const el = $(id); if(el) el.textContent = value; }
 function initHero(){
   const dateMatch = INVITE.hero.dateText.match(/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
   if (dateMatch) {
-    setText("#heroDate", `${dateMatch[1]}.${String(dateMatch[2]).padStart(2, '0')}.${String(dateMatch[3]).padStart(2, '0')}`);
+    setText("#heroDate", `${dateMatch[1]}.${Number(dateMatch[2])}.${Number(dateMatch[3])}`);
   }
   const timeMatch = INVITE.hero.dateText.match(/(오전|오후)\s*(\d{1,2})시/);
   if (timeMatch) {
@@ -199,7 +199,7 @@ function initCalendar(){
   const year = d.getFullYear();
   const month = d.getMonth() + 1;
   setText("#scheduleYear", String(year));
-  setText("#scheduleMonth", String(month).padStart(2, "0"));
+  setText("#scheduleMonth", String(month));
   const first = new Date(year, month-1, 1);
   const last = new Date(year, month, 0);
   const weddingDay = d.getDate();
@@ -635,8 +635,8 @@ function formatDate(date) {
   if (days < 7) return `${days}일 전`;
 
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
   return `${year}.${month}.${day}`;
 }
 
