@@ -133,31 +133,23 @@
       </div>
     </section>
 
-    <!-- RSVP -->
-    <section class="section fade-in">
-      <h2 class="section__title">참석 의사 전달</h2>
-      <div class="card scale-in">
-        <div class="card__desc">인원 파악을 위해 참석 여부를 알려주시면 
-          큰 도움이 됩니다.</div>
-        <a class="btn btn--primary" id="btnRsvp" target="_blank" rel="noopener">참석 여부 작성하기</a>
-      </div>
-    </section>
-
     <!-- MONEY GIFT -->
     <section class="section fade-in">
       <h2 class="section__title">마음 전하실 곳</h2>
 
-      <details class="details">
-        <summary>신랑 측 계좌번호</summary>
-        <div class="details__body" id="groomAccounts"></div>
-      </details>
+      <div class="accounts-grid">
+        <details class="details">
+          <summary>신랑 측 계좌번호</summary>
+          <div class="details__body" id="groomAccounts"></div>
+        </details>
 
-      <details class="details">
-        <summary>신부 측 계좌번호</summary>
-        <div class="details__body" id="brideAccounts"></div>
-      </details>
+        <details class="details">
+          <summary>신부 측 계좌번호</summary>
+          <div class="details__body" id="brideAccounts"></div>
+        </details>
+      </div>
 
-      <p class="hint">계좌는 “복사” 버튼으로 클립보드에 저장됩니다.</p>
+      <p class="hint">계좌는 "복사" 버튼으로 클립보드에 저장됩니다.</p>
     </section>
 
     <!-- GALLERY -->
@@ -165,6 +157,45 @@
       <h2 class="section__title">갤러리</h2>
       <div class="gallery" id="gallery">
         <div class="skeleton">이미지를 불러오는 중...</div>
+      </div>
+    </section>
+
+    <!-- GUESTBOOK -->
+    <section class="section fade-in guestbook-section">
+      <h2 class="section__title">방명록</h2>
+      
+      <!-- 방명록 목록 -->
+      <div class="guestbook-list" id="guestbookList">
+        <div class="skeleton">방명록을 불러오는 중...</div>
+      </div>
+
+      <!-- 방명록 작성 폼 -->
+      <div class="card scale-in">
+        <form class="guestbook-form" id="guestbookForm">
+          <div class="form-group">
+            <label for="guestName">이름</label>
+            <input type="text" id="guestName" name="name" required maxlength="20" placeholder="이름을 입력해주세요">
+          </div>
+          <div class="form-group">
+            <label for="guestMessage">축하 메시지</label>
+            <textarea id="guestMessage" name="message" required maxlength="500" rows="4" placeholder="축하 메시지를 남겨주세요"></textarea>
+            <div class="char-count"><span id="charCount">0</span>/500</div>
+          </div>
+          <button type="submit" class="btn btn--primary" id="submitGuestbook">
+            <span id="submitText">방명록 남기기</span>
+            <span id="submitLoading" style="display: none;">등록 중...</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- RSVP -->
+    <section class="section fade-in">
+      <h2 class="section__title">참석 의사 전달</h2>
+      <div class="card scale-in">
+        <div class="card__desc">인원 파악을 위해 참석 여부를 알려주시면 
+          큰 도움이 됩니다.</div>
+        <a class="btn btn--primary" id="btnRsvp" target="_blank" rel="noopener">참석 여부 작성하기</a>
       </div>
     </section>
 

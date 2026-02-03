@@ -9,10 +9,19 @@
 1) `./images/gallery/` 폴더에 사진을 넣습니다. (예: 01.jpg, 02.jpg ...)
 2) `script.js`의 `gallery.images`에 파일명을 동일하게 적습니다.
 
-## 3) 배포(가장 쉬운 방법: Netlify)
+## 3) 방명록 기능 설정
+방명록 기능을 사용하려면 Firebase 설정이 필요합니다.
+
+1. `FIREBASE_SETUP.md` 파일을 참고하여 Firebase 프로젝트를 생성하세요
+2. `script.js`의 `INVITE.firebase` 섹션에 Firebase 설정 정보를 입력하세요
+3. Firebase 설정이 완료되지 않으면 방명록 섹션은 자동으로 숨겨집니다
+
+자세한 설정 방법은 `FIREBASE_SETUP.md`를 참고하세요.
+
+## 4) 배포(가장 쉬운 방법: Netlify)
 - Netlify 사이트에 로그인 → "Add new site" → "Deploy manually"
 - 이 폴더 전체를 드래그&드롭하면 바로 배포됩니다.
 
-## 4) 자주 나는 문제
+## 5) 자주 나는 문제
 - 카톡 미리보기(OG)는 배포 후에도 캐시가 남습니다. 이미지/제목을 바꿨는데 안 바뀌면,
   카카오/페이스북 디버거로 캐시 갱신을 해주세요.
