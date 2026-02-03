@@ -1166,6 +1166,6 @@ body{
   pointer-events: none;
 }
 
-#transportText{
+.transportText{
   white-space: pre-line;
 }
