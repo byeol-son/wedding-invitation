@@ -64,6 +64,18 @@ const INVITE = {
   gallery: {
     images: ["01.jpg","02.jpg","03.jpg","04.jpg","05.jpg","06.jpg","07.jpg","08.jpg","09.jpg","10.jpg","11.jpg","12.jpg"],
   },
+
+  // ========== Firebase 설정 ==========
+  // ⚠️ Firebase 프로젝트 생성 후 아래 정보를 입력하세요
+  // 설정 방법은 FIREBASE_SETUP.md 파일을 참고하세요
+  firebase: {
+    apiKey: "AIzaSyDj5ELPuBynx9IqWkrMJ5IqFLB5GOXh8Ok",
+    authDomain: "wedding-invitation-2bbaf.firebaseapp.com",
+    projectId: "wedding-invitation-2bbaf",
+    storageBucket: "wedding-invitation-2bbaf.firebasestorage.app",
+    messagingSenderId: "166603008244",
+    appId: "1:166603008244:web:8f397024532ed0b57ed6a1"
+  },
 };
 
 // ====== 로직 (버그 수정됨) ======
@@ -93,10 +105,15 @@ class FadeIn {
           entry.target.classList.add('visible');
           if (this.options.once) observer.unobserve(entry.target);
         } else if (!this.options.once) {
-          entry.target.classList.remove('visible');
+          // 깜빡거림 방지: threshold를 높여서 완전히 벗어났을 때만 제거
+          // 또는 아예 제거하지 않고 유지
+          // entry.target.classList.remove('visible');
         }
       });
-    }, this.options);
+    }, {
+      rootMargin: this.options.rootMargin,
+      threshold: this.options.threshold
+    });
     this.elements.forEach(el => observer.observe(el));
   }
 }
@@ -129,11 +146,15 @@ class StaggerIn {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           this.items.forEach((item, index) => {
-            setTimeout(() => item.classList.add('visible'), index * this.options.delay);
+            // 이미 visible이 아닐 때만 애니메이션 실행
+            if (!item.classList.contains('visible')) {
+              setTimeout(() => item.classList.add('visible'), index * this.options.delay);
+            }
           });
           if (this.options.once) observer.unobserve(entry.target);
         } else if (!this.options.once) {
-          this.items.forEach(item => item.classList.remove('visible'));
+          // 깜빡거림 방지: visible 상태 유지
+          // this.items.forEach(item => item.classList.remove('visible'));
         }
       });
     }, {
@@ -334,16 +355,295 @@ function initShare(){
 }
 
 function initAnimations(){
-  new FadeIn('.section.fade-in', { once: false });
-  new StaggerIn('.countdown__grid', { delay: 100, once: false });
-  new StaggerIn('.gallery', { delay: 80, once: false });
-  new StaggerIn('.contactGrid', { delay: 80, once: false });
-  new FadeIn('.card.scale-in', { once: false });
+  // 애니메이션은 유지하되, 깜빡거림 방지를 위해 visible 상태는 유지
+  new FadeIn('.section.fade-in', { once: false, rootMargin: '0px 0px -100px 0px', threshold: 0.15 });
+  new StaggerIn('.countdown__grid', { delay: 100, once: false, rootMargin: '0px 0px -100px 0px', threshold: 0.15 });
+  new StaggerIn('.gallery', { delay: 80, once: false, rootMargin: '0px 0px -100px 0px', threshold: 0.15 });
+  new StaggerIn('.contactGrid', { delay: 80, once: false, rootMargin: '0px 0px -100px 0px', threshold: 0.15 });
+  new FadeIn('.card.scale-in', { once: false, rootMargin: '0px 0px -100px 0px', threshold: 0.15 });
   
-  // ⭐ 문제의 버튼 행 부분 수정
+  // 버튼 행
   $$('.btnRow').forEach(btnRow => {
-    new StaggerIn(btnRow, { delay: 100, once: false });
+    new StaggerIn(btnRow, { delay: 100, once: false, rootMargin: '0px 0px -100px 0px', threshold: 0.15 });
   });
+}
+
+// ============================================
+// 방명록 기능 (Firebase Firestore)
+// ============================================
+
+let db = null;
+
+async function initFirebase() {
+  const guestbookSection = $('.guestbook-section');
+  
+  if (!guestbookSection) {
+    console.warn('방명록 섹션을 찾을 수 없습니다.');
+    return;
+  }
+
+  // Firebase 설정이 완료되지 않았으면 방명록 기능 비활성화
+  if (!INVITE.firebase || INVITE.firebase.apiKey === "YOUR_API_KEY" || !INVITE.firebase.apiKey) {
+    console.warn('Firebase 설정이 완료되지 않았습니다. 방명록 섹션을 숨깁니다.');
+    guestbookSection.style.display = 'none';
+    return;
+  }
+
+  console.log('Firebase 초기화 시작...', INVITE.firebase.projectId);
+
+  try {
+    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
+    const { getFirestore } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    
+    const app = initializeApp(INVITE.firebase);
+    db = getFirestore(app);
+    
+    console.log('Firebase 초기화 성공!');
+    
+    // 방명록 기능 초기화
+    initGuestbook();
+  } catch (error) {
+    console.error('Firebase 초기화 실패:', error);
+    // 에러가 발생해도 섹션은 보이도록 하고 에러 메시지 표시
+    guestbookSection.style.display = 'block';
+    const form = $("#guestbookForm");
+    if (form) {
+      form.innerHTML = '<div class="card"><div class="card__desc" style="color: #c94848;">방명록 기능을 사용할 수 없습니다.<br>브라우저 콘솔을 확인해주세요.</div></div>';
+    }
+  }
+}
+
+function initGuestbook() {
+  const form = $("#guestbookForm");
+  const list = $("#guestbookList");
+  const messageInput = $("#guestMessage");
+  const charCount = $("#charCount");
+  const submitBtn = $("#submitGuestbook");
+  const submitText = $("#submitText");
+  const submitLoading = $("#submitLoading");
+
+  if (!form || !list) return;
+
+  // 글자 수 카운터
+  if (messageInput && charCount) {
+    messageInput.addEventListener('input', (e) => {
+      charCount.textContent = e.target.value.length;
+    });
+  }
+
+  // 폼 제출
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const nameInput = $("#guestName");
+    if (!nameInput || !messageInput) return;
+
+    const name = nameInput.value.trim();
+    const message = messageInput.value.trim();
+
+    if (!name || !message) {
+      new Toast('이름과 메시지를 모두 입력해주세요');
+      return;
+    }
+
+    // 제출 버튼 비활성화
+    submitBtn.disabled = true;
+    submitText.style.display = 'none';
+    submitLoading.style.display = 'inline';
+
+    try {
+      const { collection, addDoc, serverTimestamp } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+      
+      await addDoc(collection(db, 'guestbook'), {
+        name: name,
+        message: message,
+        createdAt: serverTimestamp(),
+      });
+
+      // 폼 초기화
+      form.reset();
+      charCount.textContent = '0';
+      new Toast('방명록이 등록되었습니다!');
+    } catch (error) {
+      console.error('방명록 등록 실패:', error);
+      new Toast('방명록 등록에 실패했습니다. 다시 시도해주세요.');
+    } finally {
+      submitBtn.disabled = false;
+      submitText.style.display = 'inline';
+      submitLoading.style.display = 'none';
+    }
+  });
+
+  // 방명록 목록 불러오기
+  loadGuestbook();
+}
+
+async function loadGuestbook() {
+  const list = $("#guestbookList");
+  if (!list || !db) return;
+
+  list.innerHTML = '<div class="guestbook-loading">방명록을 불러오는 중...</div>';
+
+  try {
+    const { collection, query, orderBy, limit, onSnapshot } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    
+    // Firestore에서 최신 50개만 가져오기
+    const q = query(
+      collection(db, 'guestbook'),
+      orderBy('createdAt', 'desc'),
+      limit(50)
+    );
+
+    onSnapshot(q, (snapshot) => {
+      if (snapshot.empty) {
+        list.innerHTML = '<div class="guestbook-empty">아직 방명록이 없습니다.<br>첫 번째 축하 메시지를 남겨주세요! 💕</div>';
+        return;
+      }
+
+      list.innerHTML = '';
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        const item = createGuestbookItem(data, doc.id);
+        list.appendChild(item);
+      });
+    }, (error) => {
+      console.error('방명록 불러오기 실패:', error);
+      list.innerHTML = '<div class="guestbook-empty">방명록을 불러올 수 없습니다.</div>';
+    });
+  } catch (error) {
+    console.error('Firestore 모듈 로드 실패:', error);
+    list.innerHTML = '<div class="guestbook-empty">방명록을 불러올 수 없습니다.</div>';
+  }
+}
+
+function createGuestbookItem(data, docId) {
+  const item = document.createElement('div');
+  item.className = 'guestbook-item';
+  item.dataset.docId = docId;
+
+  const name = data.name || '익명';
+  const message = data.message || '';
+  const createdAt = data.createdAt?.toDate ? data.createdAt.toDate() : new Date();
+  
+  const dateStr = formatDate(createdAt);
+
+  item.innerHTML = `
+    <div class="guestbook-item__header">
+      <div class="guestbook-item__name">${escapeHtml(name)}</div>
+      <div class="guestbook-item__header-right">
+        <div class="guestbook-item__date">${dateStr}</div>
+        <div class="guestbook-item__more-wrapper">
+          <button class="guestbook-item__more" data-doc-id="${docId}" aria-label="더보기">⋯</button>
+          <div class="guestbook-item__dropdown" style="display: none;">
+            <button class="guestbook-item__dropdown-item btn--edit" data-doc-id="${docId}" data-name="${escapeHtml(name)}" data-message="${escapeHtml(message)}">수정</button>
+            <button class="guestbook-item__dropdown-item btn--delete" data-doc-id="${docId}">삭제</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="guestbook-item__message" data-message="${escapeHtml(message)}">${escapeHtml(message)}</div>
+  `;
+
+  // 더보기 버튼 이벤트 (드롭다운)
+  const moreBtn = item.querySelector('.guestbook-item__more');
+  const dropdown = item.querySelector('.guestbook-item__dropdown');
+  
+  moreBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isVisible = dropdown.style.display !== 'none';
+    dropdown.style.display = isVisible ? 'none' : 'block';
+  });
+
+  // 외부 클릭 시 드롭다운 닫기
+  document.addEventListener('click', (e) => {
+    if (!item.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  });
+
+  // 수정 버튼 이벤트
+  const editBtn = item.querySelector('.btn--edit');
+  editBtn.addEventListener('click', () => {
+    dropdown.style.display = 'none';
+    editGuestbook(docId, name, message);
+  });
+
+  // 삭제 버튼 이벤트
+  const deleteBtn = item.querySelector('.btn--delete');
+  deleteBtn.addEventListener('click', () => {
+    dropdown.style.display = 'none';
+    deleteGuestbook(docId);
+  });
+
+  return item;
+}
+
+async function editGuestbook(docId, currentName, currentMessage) {
+  const newName = prompt('이름을 수정하세요:', currentName);
+  if (newName === null) return; // 취소
+
+  const newMessage = prompt('메시지를 수정하세요:', currentMessage);
+  if (newMessage === null) return; // 취소
+
+  if (!newName.trim() || !newMessage.trim()) {
+    new Toast('이름과 메시지를 모두 입력해주세요');
+    return;
+  }
+
+  try {
+    const { doc, updateDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    
+    await updateDoc(doc(db, 'guestbook', docId), {
+      name: newName.trim(),
+      message: newMessage.trim(),
+      updatedAt: new Date()
+    });
+
+    new Toast('방명록이 수정되었습니다!');
+  } catch (error) {
+    console.error('방명록 수정 실패:', error);
+    new Toast('방명록 수정에 실패했습니다. 다시 시도해주세요.');
+  }
+}
+
+async function deleteGuestbook(docId) {
+  if (!confirm('정말 이 방명록을 삭제하시겠습니까?')) {
+    return;
+  }
+
+  try {
+    const { doc, deleteDoc } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+    
+    await deleteDoc(doc(db, 'guestbook', docId));
+    new Toast('방명록이 삭제되었습니다!');
+  } catch (error) {
+    console.error('방명록 삭제 실패:', error);
+    new Toast('방명록 삭제에 실패했습니다. 다시 시도해주세요.');
+  }
+}
+
+function formatDate(date) {
+  const now = new Date();
+  const diff = now - date;
+  const minutes = Math.floor(diff / 60000);
+  const hours = Math.floor(diff / 3600000);
+  const days = Math.floor(diff / 86400000);
+
+  if (minutes < 1) return '방금 전';
+  if (minutes < 60) return `${minutes}분 전`;
+  if (hours < 24) return `${hours}시간 전`;
+  if (days < 7) return `${days}일 전`;
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}.${month}.${day}`;
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 function main(){
@@ -352,6 +652,18 @@ function main(){
   renderAccounts(INVITE.accounts.groomSide, "#groomAccounts");
   renderAccounts(INVITE.accounts.brideSide, "#brideAccounts");
   setTimeout(initAnimations, 100);
+  
+  // 방명록 섹션이 있는지 확인
+  const guestbookSection = $('.guestbook-section');
+  if (guestbookSection) {
+    console.log('방명록 섹션 발견:', guestbookSection);
+    // 일단 보이도록 설정 (Firebase 초기화 전에)
+    guestbookSection.style.display = 'block';
+  } else {
+    console.error('방명록 섹션을 찾을 수 없습니다!');
+  }
+  
+  initFirebase(); // Firebase 초기화
 }
 
 document.addEventListener("DOMContentLoaded", main);
