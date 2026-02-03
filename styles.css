@@ -1165,3 +1165,7 @@ body{
   cursor: not-allowed;
   pointer-events: none;
 }
+
+#transportText{
+  white-space: pre-line;
+}
