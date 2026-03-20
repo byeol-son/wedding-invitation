@@ -58,22 +58,22 @@ const INVITE = {
       { label: "어머니 장옥수", bank: "카카오뱅크", number: "3333-10-8978528" },
     ],
     brideSide: [
-      { label: "신부 손별", bank: "신한 은행", number: "110-385-059931" },
-      { label: "아버지 손주목", bank: "신한 은행", number: "629-12-036095" },
-      { label: "어머니 이옥례", bank: "신한 은행", number: "110-166-178709" },
+      { label: "신부 손별", bank: "신한은행", number: "110-385-059931" },
+      { label: "아버지 손주목", bank: "신한은행", number: "629-12-036095" },
+      { label: "어머니 이옥례", bank: "신한은행", number: "110-166-178709" },
     ],
   },
 
   // ========== 갤러리 사진 ==========
   gallery: {
     images: [
-      "01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "06.jpg", "07.jpg",
       "TJ_00067.jpg", "TJ_00097_(2).jpg", "TJ_00125.jpg", "TJ_00157.jpg",
       "TJ_00189_(2).jpg", "TJ_00448_(2).jpg", "TJ_00726.jpg", "TJ_00840.jpg",
-      "TJ_00901.jpg", "TJ_00956_(4).jpg", "TJ_00956.jpg", "TJ_00994.jpg",
-      "TJ_01002.jpg", "TJ_01104.jpg", "TJ_01162.jpg", "TJ_01200_(2).jpg",
-      "TJ_01465.jpg", "TJ_01737.jpg", "TJ_01791_(2).jpg", "TJ_01824.jpg",
-      "TJ_01837_(2).jpg", "TJ_01843.jpg"
+      "TJ_00901.jpg", "TJ_00956.jpg", "TJ_00994.jpg", "TJ_01002.jpg",
+      "TJ_01104.jpg", "TJ_01162.jpg", "TJ_01200_(2).jpg", "TJ_01465.jpg",
+      "TJ_01737.jpg", "TJ_01791_(2).jpg", "TJ_01824.jpg", "TJ_01837_(2).jpg",
+      "TJ_01843.jpg",
+      "01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "07.jpg"
     ],
   },
 
