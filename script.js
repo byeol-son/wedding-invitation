@@ -42,7 +42,7 @@ const INVITE = {
     naverMapUrl: "https://naver.me/5JpUFe0x",
     googleMapUrl: "https://maps.app.goo.gl/8yqrqcgVFLrNswF87",
     mapQuery: "서울특별시 강남구 논현로79길 72 세인트메리엘",
-    transportText: "지하철: 2호선 역삼역 1번 출구 도보 5분\n주차: 올림피아센터빌딩 내 주차 가능",
+    transportText: "강남역 2호선 1번출구에서 약 200m 직진, 우리은행에서 우회전 후 약 300m 직진\n강남역 신분당선 4번출구에서 약 30m 직진, 358타워에서 좌회전 후 약 300m 직진\n 주차공간이 협소하여 가급적 대중교통을 이용해주세요.",
   },
 
   // ========== 참석 의사 전달 ==========
@@ -179,7 +179,7 @@ function setText(id, value){ const el = $(id); if(el) el.textContent = value; }
 function initHero(){
   const dateMatch = INVITE.hero.dateText.match(/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
   if (dateMatch) {
-    setText("#heroDate", `${dateMatch[1]}.${String(dateMatch[2]).padStart(2, '0')}.${String(dateMatch[3]).padStart(2, '0')}`);
+    setText("#heroDate", `${dateMatch[1]}.${Number(dateMatch[2])}.${Number(dateMatch[3])}`);
   }
   const timeMatch = INVITE.hero.dateText.match(/(오전|오후)\s*(\d{1,2})시/);
   if (timeMatch) {
@@ -207,7 +207,7 @@ function initCalendar(){
   const year = d.getFullYear();
   const month = d.getMonth() + 1;
   setText("#scheduleYear", String(year));
-  setText("#scheduleMonth", String(month).padStart(2, "0"));
+  setText("#scheduleMonth", String(month));
   const first = new Date(year, month-1, 1);
   const last = new Date(year, month, 0);
   const weddingDay = d.getDate();
@@ -471,7 +471,7 @@ function initGuestbook() {
       // 폼 초기화
       form.reset();
       charCount.textContent = '0';
-      new Toast('방명록이 등록되었습니다!');
+      new Toast('방명록이 등록되었습니다👏🏻👏🏻');
     } catch (error) {
       console.error('방명록 등록 실패:', error);
       new Toast('방명록 등록에 실패했습니다. 다시 시도해주세요.');
@@ -643,8 +643,8 @@ function formatDate(date) {
   if (days < 7) return `${days}일 전`;
 
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
   return `${year}.${month}.${day}`;
 }
 
