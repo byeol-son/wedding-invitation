@@ -70,7 +70,7 @@ const INVITE = {
       "TJ_00067.jpg", "TJ_00097_(2).jpg", "TJ_00125.jpg", "TJ_00157.jpg",
       "TJ_00189_(2).jpg", "TJ_00448_(2).jpg", "TJ_00726.jpg", "TJ_00840.jpg",
       "TJ_00901.jpg", "TJ_00956.jpg", "TJ_00994.jpg", "TJ_01002.jpg",
-      "TJ_01104.jpg", "TJ_01162.jpg", "TJ_01200_(2).jpg", "TJ_01465.jpg",
+      "TJ_01104.jpg", "TJ_01162.jpg", "TJ_01200.jpg", "TJ_01465.jpg",
       "TJ_01737.jpg", "TJ_01791_(2).jpg", "TJ_01824.jpg", "TJ_01837_(2).jpg",
       "TJ_01843.jpg",
       "01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "07.jpg"
