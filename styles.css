@@ -554,18 +554,12 @@ body{
   border-color: #357AE8;
 }
 
-/* Accounts Grid - 가로 배치 */
+/* Accounts Grid - 세로 배치 */
 .accounts-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 12px;
   margin-bottom: 16px;
-}
-
-@media (max-width: 480px) {
-  .accounts-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* Details (accordion) - Venice 스타일 */

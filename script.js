@@ -47,16 +47,20 @@ const INVITE = {
 
   // ========== 참석 의사 전달 ==========
   rsvp: {
-    formUrl: "https://forms.gle/pJCxp9tg9rurkp9p6",
+    formUrl: "https://forms.gle/5cYm1NGP71Qd2iVv7",
   },
 
   // ========== 계좌번호 ==========
   accounts: {
     groomSide: [
-      { label: "신랑", bank: "OO은행", number: "000-0000-0000-00" },
+      { label: "신랑 신현욱", bank: "국민은행", number: "228802-04-016399" },
+      { label: "아버지 신유열", bank: "기업은행", number: "230-068904-01-014" },
+      { label: "어머니 장옥수", bank: "카카오뱅크", number: "3333-10-8978528" },
     ],
     brideSide: [
-      { label: "손별", bank: "신한 은행", number: "110-385-059931" },
+      { label: "신부 손별", bank: "신한 은행", number: "110-385-059931" },
+      { label: "아버지 손주목", bank: "신한 은행", number: "629-12-036095" },
+      { label: "어머니 이옥례", bank: "신한 은행", number: "110-166-178709" },
     ],
   },
 
