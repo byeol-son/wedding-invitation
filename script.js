@@ -62,7 +62,15 @@ const INVITE = {
 
   // ========== 갤러리 사진 ==========
   gallery: {
-    images: ["01.jpg","02.jpg","03.jpg","04.jpg","05.jpg","06.jpg","07.jpg","08.jpg","09.jpg","10.jpg","11.jpg","12.jpg"],
+    images: [
+      "01.jpg", "02.jpg", "03.jpg", "04.jpg", "05.jpg", "06.jpg", "07.jpg",
+      "TJ_00067.jpg", "TJ_00097_(2).jpg", "TJ_00125.jpg", "TJ_00157.jpg",
+      "TJ_00189_(2).jpg", "TJ_00448_(2).jpg", "TJ_00726.jpg", "TJ_00840.jpg",
+      "TJ_00901.jpg", "TJ_00956_(4).jpg", "TJ_00956.jpg", "TJ_00994.jpg",
+      "TJ_01002.jpg", "TJ_01104.jpg", "TJ_01162.jpg", "TJ_01200_(2).jpg",
+      "TJ_01465.jpg", "TJ_01737.jpg", "TJ_01791_(2).jpg", "TJ_01824.jpg",
+      "TJ_01837_(2).jpg", "TJ_01843.jpg"
+    ],
   },
 
   // ========== Firebase 설정 ==========
