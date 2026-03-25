@@ -193,6 +193,18 @@ function initHero(){
   setText("#heroScript", "We are getting married");
   setText("#heroNames", INVITE.hero.title.replace('❤️', '·'));
   setText("#heroVenue", INVITE.hero.placeText);
+
+  // 스크롤 시 배경 확대 효과 (1.1에서 시작)
+  const heroBg = $('.hero__bg');
+  if (heroBg) {
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+      if (scroll < 1000) {
+        // 1.1에서 시작하여 스크롤에 따라 추가 확대
+        heroBg.style.transform = `scale(${1.1 + (scroll / 2000)})`;
+      }
+    });
+  }
 }
 
 function initNames(){
