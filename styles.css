@@ -125,7 +125,7 @@ body{
 .hero__bg{
   position:absolute; inset:0;
   background: url("images/main2.jpg") center 40%/cover no-repeat;
-  transform: scale(1.03);
+  transform: scale(1.1);
   transition: transform 0.6s ease;
 }
 
@@ -136,8 +136,8 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  color: #F7F6F2;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.20);
+  color: #444; /* 어두운 색으로 변경하여 가독성 확보 */
+  text-shadow: 0 1px 4px rgba(255,255,255,0.3);
   z-index: 2;
   flex-shrink: 0;
   font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;
@@ -171,8 +171,8 @@ body{
   left: 0;
   right: 0;
 
-  /* 여기 숫자만 조절하면 위치가 바뀝니다 */
-  top: calc(28% + env(safe-area-inset-top));
+  /* 여기 숫자만 조절하면 위치가 바뀝니다. 기존 28%에서 22%로 조정하여 더 위로 올림 */
+  top: calc(22% + env(safe-area-inset-top));
   transform: translateY(-50%);
 
   display: flex;
