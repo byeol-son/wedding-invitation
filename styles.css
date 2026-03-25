@@ -124,7 +124,7 @@ body{
 }
 .hero__bg{
   position:absolute; inset:0;
-  background: url("./images/main.jpg") center 40%/cover no-repeat;
+  background: url("./images/main2.jpg") center 40%/cover no-repeat;
   transform: scale(1.03);
   transition: transform 0.6s ease;
 }
