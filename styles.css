@@ -136,8 +136,8 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  color: #444; /* 어두운 색으로 변경하여 가독성 확보 */
-  text-shadow: 0 1px 4px rgba(255,255,255,0.3);
+  color: #FFFFFF;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.45);
   z-index: 2;
   flex-shrink: 0;
   font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;

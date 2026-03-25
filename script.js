@@ -190,7 +190,7 @@ function initHero(){
     setText("#heroTime", `${timeMatch[2]}:00 ${timeMatch[1] === '오전' ? 'AM' : 'PM'}`);
   }
   setText("#heroVenueTop", INVITE.hero.placeText.split(',')[0].trim().toUpperCase());
-  setText("#heroScript", "We are getting married");
+  setText("#heroScript", "We are getting married!");
   setText("#heroNames", INVITE.hero.title.replace('❤️', '·'));
   setText("#heroVenue", INVITE.hero.placeText);
 
