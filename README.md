@@ -3,7 +3,7 @@
 ## 1) 빠른 수정 포인트
 - `script.js` 상단의 `INVITE` 설정만 바꾸면 대부분 끝납니다.
 - 대표 사진: `./images/main.jpg` 파일을 원하는 사진으로 교체
-- 카톡 미리보기 이미지: `./images/og.jpg` 교체 + `index.html`의 og:title/og:description 수정
+- 카톡 미리보기 이미지: `./images/og.png` 교체 + `index.html`의 og:title/og:description 수정
 
 ## 2) 갤러리 넣는 방법
 1) `./images/gallery/` 폴더에 사진을 넣습니다. (예: 01.jpg, 02.jpg ...)
