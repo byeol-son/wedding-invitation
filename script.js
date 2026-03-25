@@ -191,7 +191,7 @@ function initHero(){
   }
   setText("#heroVenueTop", INVITE.hero.placeText.split(',')[0].trim().toUpperCase());
   setText("#heroScript", "We are getting married!");
-  setText("#heroNames", INVITE.hero.title.replace('❤️', '·'));
+  setText("#heroNames", INVITE.hero.title);
   setText("#heroVenue", INVITE.hero.placeText);
 
   // 스크롤 시 배경 확대 효과 (1.1에서 시작)
