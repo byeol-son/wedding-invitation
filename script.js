@@ -52,13 +52,17 @@ const INVITE = {
 
   // ========== 계좌번호 ==========
   accounts: {
-    groomSide: [
+    groom: [
       { label: "신랑 신현욱", bank: "국민은행", number: "228802-04-016399" },
+    ],
+    groomParents: [
       { label: "아버지 신유열", bank: "기업은행", number: "230-068904-01-014" },
       { label: "어머니 장옥수", bank: "카카오뱅크", number: "3333-10-8978528" },
     ],
-    brideSide: [
+    bride: [
       { label: "신부 손별", bank: "신한은행", number: "110-385-059931" },
+    ],
+    brideParents: [
       { label: "아버지 손주목", bank: "신한은행", number: "629-12-036095" },
       { label: "어머니 이옥례", bank: "신한은행", number: "110-166-178709" },
     ],
@@ -335,15 +339,17 @@ function copyToClipboard(text){
 
 function renderAccounts(list, mountSel){
   const mount = $(mountSel);
-  if(!mount) return;
+  if(!mount || !list || list.length === 0) return;
   mount.innerHTML = "";
   list.forEach((a) => {
     const row = document.createElement("div");
     row.className = "account-row";
     row.style.cssText = "display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px dashed #e9e6e1";
-    row.innerHTML = `<div><div style="font-weight:650">${a.label}</div><div style="color:#6b6b6b;font-size:13px">${a.bank} · ${a.number}</div></div>`;
+    row.innerHTML = `<div><div style="font-weight:600; font-size:14px; color:#333;">${a.label}</div><div style="color:#6b6b6b;font-size:13px; margin-top:2px;">${a.bank} · ${a.number}</div></div>`;
     const btn = document.createElement("button");
     btn.className = "btn"; btn.textContent = "복사";
+    btn.style.padding = "6px 12px";
+    btn.style.fontSize = "12px";
     btn.addEventListener("click", () => copyToClipboard(`${a.bank} ${a.number}`));
     row.appendChild(btn);
     mount.appendChild(row);
@@ -679,8 +685,10 @@ function escapeHtml(text) {
 function main(){
   initHero(); initNames(); initCalendar(); initCountdown(); initVenue();
   initContacts(); initRSVP(); initGallery(); initShare();
-  renderAccounts(INVITE.accounts.groomSide, "#groomAccounts");
-  renderAccounts(INVITE.accounts.brideSide, "#brideAccounts");
+  renderAccounts(INVITE.accounts.groom, "#groomAccount");
+  renderAccounts(INVITE.accounts.groomParents, "#groomParentsAccount");
+  renderAccounts(INVITE.accounts.bride, "#brideAccount");
+  renderAccounts(INVITE.accounts.brideParents, "#brideParentsAccount");
   setTimeout(initAnimations, 100);
   
   // 방명록 섹션이 있는지 확인
