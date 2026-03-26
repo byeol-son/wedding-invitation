@@ -197,11 +197,13 @@ body{
 
 /* 하단: 이름과 장소 */
 .hero__bottom-info{
-  position: relative;
-  padding: 0 24px 40px; /* 50px -> 40px */
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 50px; /* 아래에서 50px 띄움 */
   text-align: center;
   color: #FFFFFF;
-  text-shadow: 0 2px 15px rgba(0,0,0,0.4);
+  text-shadow: 0 2px 15px rgba(0,0,0,0.5); /* 그림자 더 강화 */
   z-index: 2;
   flex-shrink: 0;
 }
