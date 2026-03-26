@@ -850,10 +850,10 @@ function createCelebrationEmoji(container) {
   emoji.className = 'celebration-emoji';
   emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
   
-  // 랜덤 위치 및 회전
-  const x = (Math.random() - 0.5) * 150;
-  const y = (Math.random() - 0.5) * 50 - 50;
-  const r = (Math.random() - 0.5) * 90;
+  // 랜덤 위치 및 회전 (위로 더 높이 솟구치도록 조정)
+  const x = (Math.random() - 0.5) * 160;
+  const y = -150 - Math.random() * 100; // 위쪽 방향으로의 거리
+  const r = (Math.random() - 0.5) * 120;
   
   emoji.style.setProperty('--x', x);
   emoji.style.setProperty('--y', y);
@@ -864,7 +864,7 @@ function createCelebrationEmoji(container) {
   // 애니메이션 종료 후 제거
   setTimeout(() => {
     emoji.remove();
-  }, 1200);
+  }, 1500);
 }
 
 document.addEventListener("DOMContentLoaded", main);
