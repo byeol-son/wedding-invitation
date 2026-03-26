@@ -376,6 +376,7 @@ function initGallery(){
     const img = document.createElement("img");
     img.className = "gallery__img stagger-item";
     img.src = src;
+    img.loading = "lazy"; // 레이지 로딩 추가
     img.addEventListener("click", () => openLightbox(idx));
     mount.appendChild(img);
   });
