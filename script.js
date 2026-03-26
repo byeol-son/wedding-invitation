@@ -81,6 +81,13 @@ const INVITE = {
     ],
   },
 
+  // ========== 배경 음악 (YouTube) ==========
+  music: {
+    enabled: true,
+    videoId: "m_S49Ers1m8", // 원하는 유튜브 영상 ID (예: m_S49Ers1m8)
+    autoplay: true,
+  },
+
   // ========== Firebase 설정 ==========
   // ⚠️ Firebase 프로젝트 생성 후 아래 정보를 입력하세요
   // 설정 방법은 FIREBASE_SETUP.md 파일을 참고하세요
@@ -682,9 +689,82 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
+// ============================================
+// 배경 음악 기능 (YouTube API)
+// ============================================
+
+let player;
+let isMusicPlaying = false;
+
+function initMusic() {
+  const musicConfig = INVITE.music;
+  if (!musicConfig || !musicConfig.enabled) {
+    const musicPlayer = $("#musicPlayer");
+    if (musicPlayer) musicPlayer.style.display = 'none';
+    return;
+  }
+
+  // YouTube IFrame API 로드
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+  const musicBtn = $("#musicBtn");
+  if (musicBtn) {
+    musicBtn.addEventListener('click', toggleMusic);
+  }
+}
+
+// API가 준비되면 실행될 콜백 함수
+window.onYouTubeIframeAPIReady = function() {
+  player = new YT.Player('ytPlayer', {
+    height: '0',
+    width: '0',
+    videoId: INVITE.music.videoId,
+    playerVars: {
+      'autoplay': 0,
+      'controls': 0,
+      'loop': 1,
+      'playlist': INVITE.music.videoId // 루프를 위해 동일 ID 지정
+    },
+    events: {
+      'onReady': onPlayerReady,
+      'onStateChange': onPlayerStateChange
+    }
+  });
+}
+
+function onPlayerReady(event) {
+  console.log("Music Player Ready");
+}
+
+function onPlayerStateChange(event) {
+  const musicBtn = $("#musicBtn");
+  if (event.data == YT.PlayerState.PLAYING) {
+    isMusicPlaying = true;
+    musicBtn?.classList.add('playing');
+  } else {
+    isMusicPlaying = false;
+    musicBtn?.classList.remove('playing');
+  }
+}
+
+function toggleMusic() {
+  if (!player) return;
+
+  if (isMusicPlaying) {
+    player.pauseVideo();
+  } else {
+    player.playVideo();
+    if (player.isMuted()) player.unMute();
+  }
+}
+
 function main(){
   initHero(); initNames(); initCalendar(); initCountdown(); initVenue();
   initContacts(); initRSVP(); initGallery(); initShare();
+  initMusic();
   
   // 신랑 측 계좌 통합
   const groomSideAll = [...(INVITE.accounts.groom || []), ...(INVITE.accounts.groomParents || [])];
