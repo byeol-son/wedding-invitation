@@ -765,6 +765,7 @@ function main(){
   initHero(); initNames(); initCalendar(); initCountdown(); initVenue();
   initContacts(); initRSVP(); initGallery(); initShare();
   initMusic();
+  initSupport();
   
   // 신랑 측 계좌 통합
   const groomSideAll = [...(INVITE.accounts.groom || []), ...(INVITE.accounts.groomParents || [])];
@@ -787,6 +788,61 @@ function main(){
   }
   
   initFirebase(); // Firebase 초기화
+}
+
+function initSupport() {
+  const btn = $("#supportBtn");
+  const text = $("#supportText");
+  const container = $("#heartContainer");
+  const invitationSection = $("#invitationSection");
+  
+  if (!btn || !text || !container) return;
+  
+  let count = 0;
+  const targetCount = 5;
+  
+  btn.addEventListener('click', () => {
+    count++;
+    
+    // 하트 팡팡
+    createHeart(container);
+    
+    if (count === 1) {
+      text.textContent = "응원하는 만큼 눌러주세요! 💖";
+    }
+    
+    if (count >= targetCount) {
+      text.textContent = "감사합니다! 축복의 글로 안내합니다 ✨";
+      btn.style.pointerEvents = 'none';
+      
+      // 잠시 후 다음 섹션으로 부드럽게 이동
+      setTimeout(() => {
+        invitationSection?.scrollIntoView({ behavior: 'smooth' });
+      }, 1000);
+    }
+  });
+}
+
+function createHeart(container) {
+  const heart = document.createElement('div');
+  heart.className = 'heart-particle';
+  heart.innerHTML = '💖';
+  
+  // 랜덤 위치 및 회전
+  const x = (Math.random() - 0.5) * 200;
+  const y = (Math.random() - 0.5) * 100;
+  const r = (Math.random() - 0.5) * 60;
+  
+  heart.style.setProperty('--x', x);
+  heart.style.setProperty('--y', y);
+  heart.style.setProperty('--r', r);
+  
+  container.appendChild(heart);
+  
+  // 애니메이션 종료 후 제거
+  setTimeout(() => {
+    heart.remove();
+  }, 1000);
 }
 
 document.addEventListener("DOMContentLoaded", main);

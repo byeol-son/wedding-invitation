@@ -240,6 +240,79 @@ body{
   pointer-events: none;
 }
 
+/* SUPPORT BUTTON - 응원하기 */
+.hero__support {
+  margin-top: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.support-btn {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 30px;
+  padding: 10px 24px;
+  color: #fff;
+  font-family: 'Gowun Batang', serif;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.support-btn:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.support-icon {
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.support-btn:active .support-icon {
+  transform: scale(1.4);
+}
+
+/* HEART PARTICLES */
+.heart-container {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.heart-particle {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  font-size: 20px;
+  color: #ff6b6b;
+  user-select: none;
+  animation: flyUp 1s ease-out forwards;
+}
+
+@keyframes flyUp {
+  0% {
+    transform: translate(-50%, 0) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + (var(--x) * 1px)), calc(-100px + (var(--y) * 1px))) scale(1.5) rotate(var(--r) * 1deg);
+    opacity: 0;
+  }
+}
+
 /* MUSIC PLAYER - 플로팅 음악 버튼 */
 .music-player {
   position: fixed;
