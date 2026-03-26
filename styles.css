@@ -207,18 +207,22 @@ body{
   font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;
   font-weight: 300;
 }
-
 .hero__names{
   margin: 0 0 8px;
-  font-size: 18px;
+  font-family: 'MapoGoldenPier', serif;
+  font-size: 22px;
   letter-spacing: 0.1em; /* +100 */
   font-weight: 400;
+  color: #444; /* 사진 밝기에 맞춰 어두운 회색으로 변경 */
 }
 
 .hero__venue{
   margin: 0;
+  font-family: 'MapoGoldenPier', serif;
   font-size: 15px;
   letter-spacing: 0.12em; /* +120 */
+  color: #555;
+}
   font-weight: 400;
   text-transform: uppercase;
 }
