@@ -853,13 +853,13 @@ function createCelebrationEmoji(container) {
   emoji.className = 'celebration-emoji';
   emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
   
-  // 버튼 양 옆에서 나타나도록 설정
-  const side = Math.random() > 0.5 ? 1 : -1; // 1: 오른쪽, -1: 왼쪽
-  const startX = side * 60; // 버튼 중심에서 60px 떨어진 곳
+  // 버튼 양 옆에서 나타나도록 설정 (거리 대폭 확장: 60 -> 100)
+  const side = Math.random() > 0.5 ? 1 : -1; 
+  const startX = side * 100; // 버튼 중심에서 더 멀리 떨어뜨림
   
-  // 랜덤 위치 및 회전 (위로 훨씬 더 높이 솟구치도록 y값 조정)
-  const x = startX + (Math.random() - 0.5) * 80;
-  const y = -250 - Math.random() * 150; // -150 -> -250으로 높이 대폭 상향
+  // 랜덤 위치 및 회전
+  const x = startX + (Math.random() - 0.5) * 100;
+  const y = -250 - Math.random() * 150; 
   const r = (Math.random() - 0.5) * 180;
   
   emoji.style.left = `calc(50% + ${startX}px)`;
