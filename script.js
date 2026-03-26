@@ -84,7 +84,7 @@ const INVITE = {
   // ========== 배경 음악 (YouTube) ==========
   music: {
     enabled: true,
-    videoId: "m_S49Ers1m8", // 원하는 유튜브 영상 ID (예: m_S49Ers1m8)
+    videoId: "arXtbmnco_4", // 요청하신 영상 ID로 변경
     autoplay: true,
   },
 
