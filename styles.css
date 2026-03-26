@@ -1160,6 +1160,50 @@ body{
   pointer-events: none;
 }
 
+/* TRANSPORT INFO - 구조화된 교통 안내 */
+.transport-info {
+  margin-top: 24px;
+  text-align: left;
+  background: #fbfbf9;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #f0eee9;
+}
+
+.transport-item {
+  margin-bottom: 20px;
+}
+
+.transport-item:last-child {
+  margin-bottom: 0;
+}
+
+.transport-label {
+  font-size: 13px;
+  font-weight: 650;
+  color: #555;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.transport-desc {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+  padding-left: 20px;
+}
+
+.transport-desc strong {
+  color: #333;
+  font-weight: 600;
+}
+
+.transport-desc + .transport-desc {
+  margin-top: 8px;
+}
+
 .transportText{
   white-space: pre-line;
 }

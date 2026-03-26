@@ -42,7 +42,7 @@ const INVITE = {
     naverMapUrl: "https://naver.me/5JpUFe0x",
     googleMapUrl: "https://maps.app.goo.gl/8yqrqcgVFLrNswF87",
     mapQuery: "서울특별시 강남구 논현로79길 72 세인트메리엘",
-    transportText: "강남역 2호선 1번출구에서 약 200m 직진, 우리은행에서 우회전 후 약 300m 직진\n강남역 신분당선 4번출구에서 약 30m 직진, 358타워에서 좌회전 후 약 300m 직진\n 주차공간이 협소하여 가급적 대중교통을 이용해주세요.",
+    parkingText: "건물 내 주차 공간이 협소하오니 가급적 대중교통 이용을 부탁드립니다.",
   },
 
   // ========== 참석 의사 전달 ==========
@@ -281,7 +281,13 @@ function initVenue(){
   setText("#venueName", INVITE.venue.name);
   setText("#venueHall", INVITE.venue.hall);
   setText("#venueAddress", INVITE.venue.address);
-  setText("#transportText", INVITE.venue.transportText);
+  
+  // 주차 안내 텍스트가 INVITE에 있으면 업데이트
+  const parkingText = $("#parkingText");
+  if(parkingText && INVITE.venue.parkingText) {
+    parkingText.textContent = INVITE.venue.parkingText;
+  }
+
   const btnKakao = $("#btnKakao");
   const btnNaver = $("#btnNaver");
   const btnGoogle = $("#btnGoogle");
