@@ -811,11 +811,11 @@ function initSupport() {
       if (player.isMuted()) player.unMute();
     }
     
-    // 하트 팡팡
-    createHeart(container);
+    // 축하 이모지 팡팡
+    createCelebrationEmoji(container);
     
     if (count === 1) {
-      text.textContent = "응원하는 만큼 눌러주세요! 💖";
+      text.textContent = "응원하는 만큼 눌러주세요! ✨";
     }
     
     if (count >= targetCount) {
@@ -844,26 +844,27 @@ function initSupport() {
   });
 }
 
-function createHeart(container) {
-  const heart = document.createElement('div');
-  heart.className = 'heart-particle';
-  heart.innerHTML = '💖';
+function createCelebrationEmoji(container) {
+  const emojis = ['✨', '🥂', '👏', '🎉', '🎊', '🥳'];
+  const emoji = document.createElement('div');
+  emoji.className = 'celebration-emoji';
+  emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
   
   // 랜덤 위치 및 회전
-  const x = (Math.random() - 0.5) * 200;
-  const y = (Math.random() - 0.5) * 100;
-  const r = (Math.random() - 0.5) * 60;
+  const x = (Math.random() - 0.5) * 150;
+  const y = (Math.random() - 0.5) * 50 - 50;
+  const r = (Math.random() - 0.5) * 90;
   
-  heart.style.setProperty('--x', x);
-  heart.style.setProperty('--y', y);
-  heart.style.setProperty('--r', r);
+  emoji.style.setProperty('--x', x);
+  emoji.style.setProperty('--y', y);
+  emoji.style.setProperty('--r', r);
   
-  container.appendChild(heart);
+  container.appendChild(emoji);
   
   // 애니메이션 종료 후 제거
   setTimeout(() => {
-    heart.remove();
-  }, 1000);
+    emoji.remove();
+  }, 1200);
 }
 
 document.addEventListener("DOMContentLoaded", main);

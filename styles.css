@@ -270,7 +270,7 @@ body{
 }
 
 .support-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.92); /* 눌리는 느낌 강화 */
   background: rgba(255, 255, 255, 0.4);
 }
 
@@ -296,38 +296,42 @@ body{
 }
 
 .support-btn:active .support-icon {
-  transform: scale(1.4);
+  transform: scale(1.3) rotate(15deg);
 }
 
-/* HEART PARTICLES */
+/* CELEBRATION PARTICLES */
 .heart-container {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   pointer-events: none;
   z-index: 5;
 }
 
-.heart-particle {
+.celebration-emoji {
   position: absolute;
   bottom: 50%;
   left: 50%;
-  font-size: 20px;
-  color: #ff6b6b;
+  font-size: 24px;
   user-select: none;
-  animation: flyUp 1s ease-out forwards;
+  pointer-events: none;
+  animation: riseAndSway 1.2s ease-out forwards;
 }
 
-@keyframes flyUp {
+@keyframes riseAndSway {
   0% {
     transform: translate(-50%, 0) scale(0.5);
+    opacity: 0;
+  }
+  20% {
     opacity: 1;
+    transform: translate(-50%, -20px) scale(1.2);
   }
   100% {
-    transform: translate(calc(-50% + (var(--x) * 1px)), calc(-100px + (var(--y) * 1px))) scale(1.5) rotate(var(--r) * 1deg);
+    transform: translate(calc(-50% + (var(--x) * 1px)), calc(-120px + (var(--y) * 1px))) scale(1) rotate(var(--r) * 1deg);
     opacity: 0;
   }
 }
