@@ -795,6 +795,7 @@ function initSupport() {
   const text = $("#supportText");
   const container = $("#heartContainer");
   const invitationSection = $("#invitationSection");
+  const overlay = $("#pageTransition");
   
   if (!btn || !text || !container) return;
   
@@ -821,10 +822,24 @@ function initSupport() {
       text.textContent = "감사합니다! 축복의 글로 안내합니다 ✨";
       btn.style.pointerEvents = 'none';
       
-      // 잠시 후 다음 섹션으로 부드럽게 이동
+      // 페이지 전환 효과 (흰색 페이드)
       setTimeout(() => {
-        invitationSection?.scrollIntoView({ behavior: 'smooth' });
-      }, 1000);
+        if (overlay) {
+          overlay.classList.add('active'); // 흰색으로 페이드 아웃
+          
+          setTimeout(() => {
+            // 흰색이 완전히 덮였을 때 즉시 스크롤 이동
+            invitationSection?.scrollIntoView(); 
+            
+            setTimeout(() => {
+              overlay.classList.remove('active'); // 다시 투명하게 페이드 인
+            }, 300);
+          }, 600);
+        } else {
+          // 오버레이가 없을 경우 기존 방식 유지
+          invitationSection?.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 800);
     }
   });
 }
