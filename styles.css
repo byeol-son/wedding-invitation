@@ -138,7 +138,7 @@ body{
   justify-content: space-between;
   align-items: flex-start;
   color: #FFFFFF;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.45);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.4);
   z-index: 2;
   flex-shrink: 0;
   font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;
@@ -166,14 +166,14 @@ body{
   text-align: right;
 }
 
-/* 중앙: 손글씨 스크립트 (위로 올린 버전) */
+/* 중앙: 손글씨 스크립트 */
 .hero__center{
   position: absolute;
   left: 0;
   right: 0;
 
-  /* 여기 숫자만 조절하면 위치가 바뀝니다. 기존 28%에서 22%로 조정하여 더 위로 올림 */
-  top: calc(22% + env(safe-area-inset-top));
+  /* 위치 원복 */
+  top: calc(28% + env(safe-area-inset-top));
   transform: translateY(-50%);
 
   display: flex;
@@ -188,8 +188,8 @@ body{
   font-family: 'Allura', 'Great Vibes', cursive;
   font-size: clamp(50px, 8vw, 64px);
   font-weight: 500;
-  color: #F7F6F2;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.20);
+  color: #FFFFFF;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.3);
   text-align: center;
   line-height: 1.2;
   letter-spacing: 0.02em;
@@ -200,20 +200,19 @@ body{
   position: relative;
   padding: 0 24px 50px;
   text-align: center;
-  color: #F7F6F2;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.20);
+  color: #FFFFFF;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.4);
   z-index: 2;
   flex-shrink: 0;
-  font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;
-  font-weight: 300;
 }
+
 .hero__names{
   margin: 0 0 8px;
   font-family: 'MapoGoldenPier', serif;
   font-size: 22px;
   letter-spacing: 0.1em; /* +100 */
   font-weight: 400;
-  color: #444; /* 사진 밝기에 맞춰 어두운 회색으로 변경 */
+  color: #FFFFFF;
 }
 
 .hero__venue{
@@ -221,7 +220,7 @@ body{
   font-family: 'MapoGoldenPier', serif;
   font-size: 15px;
   letter-spacing: 0.12em; /* +120 */
-  color: #555;
+  color: #FFFFFF;
 }
   font-weight: 400;
   text-transform: uppercase;
