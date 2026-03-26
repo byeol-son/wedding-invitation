@@ -685,10 +685,15 @@ function escapeHtml(text) {
 function main(){
   initHero(); initNames(); initCalendar(); initCountdown(); initVenue();
   initContacts(); initRSVP(); initGallery(); initShare();
-  renderAccounts(INVITE.accounts.groom, "#groomAccount");
-  renderAccounts(INVITE.accounts.groomParents, "#groomParentsAccount");
-  renderAccounts(INVITE.accounts.bride, "#brideAccount");
-  renderAccounts(INVITE.accounts.brideParents, "#brideParentsAccount");
+  
+  // 신랑 측 계좌 통합
+  const groomSideAll = [...(INVITE.accounts.groom || []), ...(INVITE.accounts.groomParents || [])];
+  renderAccounts(groomSideAll, "#groomSideAccounts");
+  
+  // 신부 측 계좌 통합
+  const brideSideAll = [...(INVITE.accounts.bride || []), ...(INVITE.accounts.brideParents || [])];
+  renderAccounts(brideSideAll, "#brideSideAccounts");
+
   setTimeout(initAnimations, 100);
   
   // 방명록 섹션이 있는지 확인
