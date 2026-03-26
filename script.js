@@ -42,7 +42,7 @@ const INVITE = {
     naverMapUrl: "https://naver.me/5JpUFe0x",
     googleMapUrl: "https://maps.app.goo.gl/8yqrqcgVFLrNswF87",
     mapQuery: "서울특별시 강남구 논현로79길 72 세인트메리엘",
-    parkingText: "건물 내 주차 공간이 협소하오니 가급적 대중교통 이용을 부탁드립니다.\n\n건물 주차장 (약 150대, 만차 시 외부 주차장 안내)\n외부 주차장: 역삼1동 주민센터, 한국과학기술회관 등",
+    parkingText: "<strong>건물 내 주차 공간이 협소하오니 가급적 대중교통 이용을 부탁드립니다.</strong>\n\n건물 주차장 (약 150대, 만차 시 외부 주차장 안내)\n외부 주차장: 역삼1동 주민센터, 한국과학기술회관 등",
   },
 
   // ========== 참석 의사 전달 ==========
@@ -289,7 +289,7 @@ function initVenue(){
   // 주차 안내 텍스트가 INVITE에 있으면 업데이트
   const parkingText = $("#parkingText");
   if(parkingText && INVITE.venue.parkingText) {
-    parkingText.textContent = INVITE.venue.parkingText;
+    parkingText.innerHTML = INVITE.venue.parkingText.replace(/\n/g, '<br>');
   }
 
   const btnKakao = $("#btnKakao");
