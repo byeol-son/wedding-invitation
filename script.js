@@ -766,7 +766,6 @@ function main(){
   initHero(); initNames(); initCalendar(); initCountdown(); initVenue();
   initContacts(); initRSVP(); initGallery(); initShare();
   initMusic();
-  initSupport();
   
   // 신랑 측 계좌 통합
   const groomSideAll = [...(INVITE.accounts.groom || []), ...(INVITE.accounts.groomParents || [])];
@@ -789,91 +788,6 @@ function main(){
   }
   
   initFirebase(); // Firebase 초기화
-}
-
-function initSupport() {
-  const btn = $("#supportBtn");
-  const text = $("#supportText");
-  const container = $("#heartContainer");
-  const invitationSection = $("#invitationSection");
-  const overlay = $("#pageTransition");
-  
-  if (!btn || !text || !container) return;
-  
-  let count = 0;
-  const targetCount = 5;
-  
-  btn.addEventListener('click', () => {
-    count++;
-    
-    // 첫 클릭 시 음악 재생 시도 (브라우저 정책 대응)
-    if (player && !isMusicPlaying) {
-      player.playVideo();
-      if (player.isMuted()) player.unMute();
-    }
-    
-    // 축하 이모지 팡팡
-    createCelebrationEmoji(container);
-    
-    if (count === 1) {
-      text.textContent = "응원하는 만큼 눌러주세요! ✨";
-    }
-    
-    if (count >= targetCount) {
-      text.textContent = "그 마음 잊지 않겠습니다. 저희의 첫 걸음을 지켜봐 주세요 🤍";
-      btn.style.pointerEvents = 'none';
-      
-      // 페이지 전환 효과 지연 시간 증가 (800ms -> 2000ms)
-      setTimeout(() => {
-        if (overlay) {
-          overlay.classList.add('active'); // 흰색으로 페이드 아웃
-          
-          setTimeout(() => {
-            // 스크롤 잠금 해제
-            document.body.classList.add('scroll-enabled');
-            
-            // 흰색이 완전히 덮였을 때 즉시 스크롤 이동
-            invitationSection?.scrollIntoView(); 
-            
-            setTimeout(() => {
-              overlay.classList.remove('active'); // 다시 투명하게 페이드 인
-            }, 500); 
-          }, 800); 
-        } else {
-          document.body.classList.add('scroll-enabled');
-          invitationSection?.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 2000);
-    }
-  });
-}
-
-function createCelebrationEmoji(container) {
-  const emojis = ['✨', '🥂', '👏', '🎉', '🎊', '🥳'];
-  const emoji = document.createElement('div');
-  emoji.className = 'celebration-emoji';
-  emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-  
-  // 버튼 양 옆에서 나타나도록 설정 (거리 대폭 확장: 60 -> 100)
-  const side = Math.random() > 0.5 ? 1 : -1; 
-  const startX = side * 100; // 버튼 중심에서 더 멀리 떨어뜨림
-  
-  // 랜덤 위치 및 회전
-  const x = startX + (Math.random() - 0.5) * 100;
-  const y = -250 - Math.random() * 150; 
-  const r = (Math.random() - 0.5) * 180;
-  
-  emoji.style.left = `calc(50% + ${startX}px)`;
-  emoji.style.setProperty('--x', (x - startX));
-  emoji.style.setProperty('--y', y);
-  emoji.style.setProperty('--r', r);
-  
-  container.appendChild(emoji);
-  
-  // 애니메이션 종료 후 제거
-  setTimeout(() => {
-    emoji.remove();
-  }, 1800); // 애니메이션 시간 연장에 맞춰 제거 시간도 늘림
 }
 
 document.addEventListener("DOMContentLoaded", main);
