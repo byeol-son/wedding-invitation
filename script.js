@@ -819,7 +819,7 @@ function initSupport() {
     }
     
     if (count >= targetCount) {
-      text.textContent = "감사합니다! 축복의 글로 안내합니다 ✨";
+      text.textContent = "그 마음 잊지 않겠습니다. 저희의 첫 걸음을 지켜봐 주세요 🤍";
       btn.style.pointerEvents = 'none';
       
       // 페이지 전환 효과 (흰색 페이드)
