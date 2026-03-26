@@ -142,7 +142,7 @@ body{
   z-index: 2;
   flex-shrink: 0;
   font-family: 'Montserrat', 'Inter', -apple-system, sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 11px;
   letter-spacing: 0.08em; /* +80 */
   text-transform: uppercase;
@@ -198,7 +198,7 @@ body{
 /* 하단: 이름과 장소 */
 .hero__bottom-info{
   position: relative;
-  padding: 0 24px 50px;
+  padding: 0 24px 40px; /* 50px -> 40px */
   text-align: center;
   color: #FFFFFF;
   text-shadow: 0 2px 15px rgba(0,0,0,0.4);
@@ -209,9 +209,9 @@ body{
 .hero__names{
   margin: 0 0 8px;
   font-family: 'MapoGoldenPier', serif;
-  font-size: 22px;
+  font-size: 24px; /* 22px -> 24px */
   letter-spacing: 0.1em; /* +100 */
-  font-weight: 400;
+  font-weight: 600; /* 400 -> 600 */
   color: #FFFFFF;
 }
 
