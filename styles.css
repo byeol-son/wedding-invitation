@@ -104,6 +104,26 @@ body{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   word-break: keep-all; /* 단어 단위로 줄바꿈 */
+  overflow: hidden; /* 초기 스크롤 금지 */
+}
+
+body.scroll-enabled {
+  overflow: auto; /* 전환 후 스크롤 허용 */
+}
+...
+.support-count {
+  position: absolute;
+  top: -30px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  font-family: 'Gowun Batang', serif;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.support-count.visible {
+  opacity: 1;
 }
 
 .wrap{

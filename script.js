@@ -793,6 +793,7 @@ function main(){
 function initSupport() {
   const btn = $("#supportBtn");
   const text = $("#supportText");
+  const countEl = $("#supportCount");
   const container = $("#heartContainer");
   const invitationSection = $("#invitationSection");
   const overlay = $("#pageTransition");
@@ -804,6 +805,12 @@ function initSupport() {
   
   btn.addEventListener('click', () => {
     count++;
+    
+    // 누적 횟수 표시
+    if (countEl) {
+      countEl.textContent = `누적 응원 ${count}회`;
+      countEl.classList.add('visible');
+    }
     
     // 첫 클릭 시 음악 재생 시도 (브라우저 정책 대응)
     if (player && !isMusicPlaying) {
@@ -821,6 +828,7 @@ function initSupport() {
     if (count >= targetCount) {
       text.textContent = "그 마음 잊지 않겠습니다. 저희의 첫 걸음을 지켜봐 주세요 🤍";
       btn.style.pointerEvents = 'none';
+      if (countEl) countEl.classList.remove('visible'); // 전환 시 횟수 숨김
       
       // 페이지 전환 효과 지연 시간 증가 (800ms -> 2000ms)
       setTimeout(() => {
@@ -828,14 +836,18 @@ function initSupport() {
           overlay.classList.add('active'); // 흰색으로 페이드 아웃
           
           setTimeout(() => {
+            // 스크롤 잠금 해제
+            document.body.classList.add('scroll-enabled');
+            
             // 흰색이 완전히 덮였을 때 즉시 스크롤 이동
             invitationSection?.scrollIntoView(); 
             
             setTimeout(() => {
               overlay.classList.remove('active'); // 다시 투명하게 페이드 인
-            }, 500); // 페이드 인 시간도 약간 늘림
-          }, 800); // 덮이는 시간 유지
+            }, 500); 
+          }, 800); 
         } else {
+          document.body.classList.add('scroll-enabled');
           invitationSection?.scrollIntoView({ behavior: 'smooth' });
         }
       }, 2000);
