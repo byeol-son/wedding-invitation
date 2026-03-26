@@ -822,7 +822,7 @@ function initSupport() {
       text.textContent = "그 마음 잊지 않겠습니다. 저희의 첫 걸음을 지켜봐 주세요 🤍";
       btn.style.pointerEvents = 'none';
       
-      // 페이지 전환 효과 (흰색 페이드)
+      // 페이지 전환 효과 지연 시간 증가 (800ms -> 2000ms)
       setTimeout(() => {
         if (overlay) {
           overlay.classList.add('active'); // 흰색으로 페이드 아웃
@@ -833,13 +833,12 @@ function initSupport() {
             
             setTimeout(() => {
               overlay.classList.remove('active'); // 다시 투명하게 페이드 인
-            }, 300);
-          }, 600);
+            }, 500); // 페이드 인 시간도 약간 늘림
+          }, 800); // 덮이는 시간 유지
         } else {
-          // 오버레이가 없을 경우 기존 방식 유지
           invitationSection?.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 800);
+      }, 2000);
     }
   });
 }
@@ -850,12 +849,17 @@ function createCelebrationEmoji(container) {
   emoji.className = 'celebration-emoji';
   emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
   
-  // 랜덤 위치 및 회전 (위로 더 높이 솟구치도록 조정)
-  const x = (Math.random() - 0.5) * 160;
-  const y = -150 - Math.random() * 100; // 위쪽 방향으로의 거리
-  const r = (Math.random() - 0.5) * 120;
+  // 버튼 양 옆에서 나타나도록 설정
+  const side = Math.random() > 0.5 ? 1 : -1; // 1: 오른쪽, -1: 왼쪽
+  const startX = side * 60; // 버튼 중심에서 60px 떨어진 곳
   
-  emoji.style.setProperty('--x', x);
+  // 랜덤 위치 및 회전 (위로 훨씬 더 높이 솟구치도록 y값 조정)
+  const x = startX + (Math.random() - 0.5) * 80;
+  const y = -250 - Math.random() * 150; // -150 -> -250으로 높이 대폭 상향
+  const r = (Math.random() - 0.5) * 180;
+  
+  emoji.style.left = `calc(50% + ${startX}px)`;
+  emoji.style.setProperty('--x', (x - startX));
   emoji.style.setProperty('--y', y);
   emoji.style.setProperty('--r', r);
   
@@ -864,7 +868,7 @@ function createCelebrationEmoji(container) {
   // 애니메이션 종료 후 제거
   setTimeout(() => {
     emoji.remove();
-  }, 1500);
+  }, 1800); // 애니메이션 시간 연장에 맞춰 제거 시간도 늘림
 }
 
 document.addEventListener("DOMContentLoaded", main);

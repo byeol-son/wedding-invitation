@@ -320,7 +320,7 @@ body{
   user-select: none;
   pointer-events: none;
   z-index: 101;
-  animation: riseAndSway 1.5s ease-out forwards;
+  animation: riseAndSway 1.8s ease-out forwards;
 }
 
 @keyframes riseAndSway {
