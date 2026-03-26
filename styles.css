@@ -1200,6 +1200,10 @@ body{
   font-weight: 600;
 }
 
+#parkingText {
+  white-space: pre-line;
+}
+
 .transport-desc + .transport-desc {
   margin-top: 8px;
 }
