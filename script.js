@@ -808,7 +808,7 @@ function initSupport() {
     
     // 누적 횟수 표시
     if (countEl) {
-      countEl.textContent = `누적 응원 ${count}회`;
+      countEl.textContent = `${count}번째 응원 중! ✨`;
       countEl.classList.add('visible');
     }
     
