@@ -804,6 +804,12 @@ function initSupport() {
   btn.addEventListener('click', () => {
     count++;
     
+    // 첫 클릭 시 음악 재생 시도 (브라우저 정책 대응)
+    if (player && !isMusicPlaying) {
+      player.playVideo();
+      if (player.isMuted()) player.unMute();
+    }
+    
     // 하트 팡팡
     createHeart(container);
     
