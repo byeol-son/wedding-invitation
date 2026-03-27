@@ -715,6 +715,20 @@ function initMusic() {
   if (musicBtn) {
     musicBtn.addEventListener('click', toggleMusic);
   }
+
+  // 브라우저 정책 대응: 화면 어디든 첫 터치 시 음악 재생
+  const startMusicOnFirstInteraction = () => {
+    if (player && !isMusicPlaying) {
+      player.playVideo();
+      if (player.isMuted()) player.unMute();
+      // 재생 성공 시 리스너 제거
+      document.removeEventListener('click', startMusicOnFirstInteraction);
+      document.removeEventListener('touchstart', startMusicOnFirstInteraction);
+    }
+  };
+
+  document.addEventListener('click', startMusicOnFirstInteraction);
+  document.addEventListener('touchstart', startMusicOnFirstInteraction);
 }
 
 // API가 준비되면 실행될 콜백 함수
