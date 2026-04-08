@@ -370,20 +370,28 @@ async function initGallery(){
   let imgs = [];
   try {
     const bucket = INVITE.firebase.storageBucket;
+    console.log('📸 갤러리 초기화 시작 (Firebase)...');
     const res = await fetch(`https://firebasestorage.googleapis.com/v0/b/${bucket}/o?prefix=wedding%2Fgallery%2F`);
     const data = await res.json();
+    console.log('📸 Firebase API 응답:', data.items?.length || 0, '개 이미지 발견');
     imgs = (data.items || [])
       .map(item => item.name.split('/').pop())
       .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
       .sort();
+    console.log('📸 필터링 후:', imgs.length, '개 이미지');
   } catch(e) {
-    console.error('갤러리 목록 로드 실패:', e);
+    console.error('❌ 갤러리 목록 로드 실패:', e);
     return;
   }
 
+  console.log('📸 mount 요소:', mount);
   mount.innerHTML = "";
+  console.log('📸 mount cleared');
+
   const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 저화질 (Firebase Storage)
-  const hqPaths    = imgs.map(f => firebaseUrl(f));             // 고화질 (Firebase Storage)
+  const hqPaths    = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 고화질 (Firebase Storage)
+
+  console.log('📸 첫 번째 URL:', thumbPaths[0]);
 
   // 고화질 Image 객체 캐시 (한 번 받으면 재사용)
   const hqCache = new Array(imgs.length).fill(null);
@@ -395,6 +403,7 @@ async function initGallery(){
     hqCache[idx] = image;
   }
 
+  console.log('📸 이미지 요소 생성 시작...');
   thumbPaths.forEach((src, idx) => {
     const img = document.createElement("img");
     img.className = "gallery__img stagger-item";
@@ -404,7 +413,11 @@ async function initGallery(){
     img.addEventListener("mouseenter", () => preloadHQ(idx));
     img.addEventListener("click", () => openLightbox(idx));
     mount.appendChild(img);
+    // stagger-item은 opacity:0으로 시작하므로 바로 visible 클래스 추가
+    img.classList.add('visible');
+    if (idx === 0) console.log('📸 첫 번째 이미지 추가됨');
   });
+  console.log('📸 총', imgs.length, '개 이미지 추가 완료');
 
   // 페이지 로드 후 백그라운드에서 고화질 순차 프리로드
   // 2장씩 동시에, 3초 뒤 시작 (페이지 초기 로딩 방해 안 하도록)

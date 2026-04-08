@@ -508,16 +508,16 @@ body{
 /* Map - Venice 스타일 */
 .map{
   border-radius: var(--radius);
-  overflow:hidden;
+  overflow: hidden;
   border: none;
   box-shadow: var(--shadow-soft);
   background: var(--paper);
-  margin-bottom: 16px;
-  white-space: pre-line;
+  margin: 0;
+  padding: 0;
 }
 .map iframe{
   width:100%;
-  height: 300px;
+  height: 360px;
   border:0;
   display:block;
 }
@@ -527,9 +527,14 @@ body{
   height: 360px !important;
   border-radius: var(--radius);
   overflow: hidden;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 .root_daum_roughmap_landing {
   width: 100% !important;
+  height: 360px !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Buttons */
