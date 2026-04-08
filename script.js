@@ -420,8 +420,8 @@ async function initGallery(){
   mount.innerHTML = "";
   console.log('📸 mount cleared');
 
-  const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 갤러리 썸네일 (lazy loading)
-  const hqPaths    = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 고화질 (lightbox 클릭 시 로드)
+  const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 저화질 (갤러리)
+  const hqPaths    = imgs.map(f => firebaseUrl(f));  // 고화질 (lightbox)
 
   console.log('📸 첫 번째 URL:', thumbPaths[0]);
 
