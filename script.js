@@ -366,17 +366,25 @@ function renderAccounts(list, mountSel){
 
 function initRSVP(){ const a = $("#btnRsvp"); if(a) a.href = INVITE.rsvp.formUrl; }
 
+const FIREBASE_STORAGE_BASE = "https://firebasestorage.googleapis.com/v0/b/wedding-invitation-2bbaf.firebasestorage.app/o/wedding%2F";
+
+function firebaseUrl(filename) {
+  return FIREBASE_STORAGE_BASE + encodeURIComponent(filename) + "?alt=media";
+}
+
 function initGallery(){
   const mount = $("#gallery");
   const imgs = INVITE.gallery.images || [];
   if(!mount) return;
   mount.innerHTML = "";
-  const fullPaths = imgs.map(f => `./images/gallery/${f}`);
-  fullPaths.forEach((src, idx) => {
+  const thumbPaths = imgs.map(f => `./images/gallery/${f}`);   // 저화질 (GitHub Pages)
+  const hqPaths    = imgs.map(f => firebaseUrl(f));             // 고화질 (Firebase Storage)
+
+  thumbPaths.forEach((src, idx) => {
     const img = document.createElement("img");
     img.className = "gallery__img stagger-item";
     img.src = src;
-    img.loading = "lazy"; // 레이지 로딩 추가
+    img.loading = "lazy";
     img.addEventListener("click", () => openLightbox(idx));
     mount.appendChild(img);
   });
@@ -384,10 +392,16 @@ function initGallery(){
   const lb = $("#lightbox");
   const lbImg = $("#lbImg");
   let current = 0;
-  function openLightbox(idx){ current = idx; lbImg.src = fullPaths[current]; lb.setAttribute("aria-hidden", "false"); document.body.style.overflow = "hidden"; }
+
+  function openLightbox(idx){
+    current = idx;
+    lbImg.src = hqPaths[current];   // 라이트박스는 고화질
+    lb.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
   $("#lbClose").addEventListener("click", () => { lb.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; });
-  $("#lbPrev").addEventListener("click", () => { current = (current - 1 + fullPaths.length) % fullPaths.length; lbImg.src = fullPaths[current]; });
-  $("#lbNext").addEventListener("click", () => { current = (current + 1) % fullPaths.length; lbImg.src = fullPaths[current]; });
+  $("#lbPrev").addEventListener("click", () => { current = (current - 1 + hqPaths.length) % hqPaths.length; lbImg.src = hqPaths[current]; });
+  $("#lbNext").addEventListener("click", () => { current = (current + 1) % hqPaths.length; lbImg.src = hqPaths[current]; });
 }
 
 function initShare(){
