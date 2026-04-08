@@ -759,8 +759,8 @@ body{
   background: rgba(0,0,0,.78);
 }
 .lightbox__img{
-  max-width: min(520px, 92vw);
-  max-height: 82vh;
+  max-width: 90vw;
+  max-height: 85vh;
   border-radius: var(--radius-lg);
   border: 1px solid rgba(255,255,255,.12);
   opacity: 0;
@@ -768,6 +768,7 @@ body{
   transition: opacity 500ms var(--ease-out),
               transform 500ms var(--ease-out),
               filter 300ms ease;
+  object-fit: contain;
 }
 .lightbox[aria-hidden="false"] .lightbox__img{
   opacity: 1;
