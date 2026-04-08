@@ -401,6 +401,36 @@ function initGallery(){
     mount.appendChild(img);
   });
 
+  // 페이지 로드 후 백그라운드에서 고화질 순차 프리로드
+  // 2장씩 동시에, 3초 뒤 시작 (페이지 초기 로딩 방해 안 하도록)
+  const CONCURRENCY = 2;
+  let preloadQueue = imgs.map((_, i) => i);
+
+  function runPreloadQueue() {
+    if (preloadQueue.length === 0) return;
+    const batch = preloadQueue.splice(0, CONCURRENCY);
+    let done = 0;
+    batch.forEach(idx => {
+      if (hqCache[idx] && hqCache[idx].complete) {
+        done++;
+        if (done === batch.length) runPreloadQueue();
+        return;
+      }
+      const hq = new Image();
+      hq.onload = hq.onerror = () => {
+        done++;
+        if (done === batch.length) runPreloadQueue(); // 다음 배치
+      };
+      hq.src = hqPaths[idx];
+      hqCache[idx] = hq;
+    });
+  }
+
+  // 페이지 완전 로드 후 3초 뒤 시작
+  const startPreload = () => setTimeout(runPreloadQueue, 3000);
+  if (document.readyState === "complete") startPreload();
+  else window.addEventListener("load", startPreload);
+
   const lb = $("#lightbox");
   const lbImg = $("#lbImg");
   let current = 0;
