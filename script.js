@@ -972,7 +972,7 @@ function createPetals() {
     document.body.appendChild(petal);
 
     setTimeout(() => petal.remove(), (duration + 0.5) * 1000);
-  }, 1000); // 꽃잎 수 반으로 줄임 (500ms -> 1000ms)
+  }, 2000); // 꽃잎 생성 빈도 2초 간격
 }
 
 // 3. 별/촛불 배경 파티클
