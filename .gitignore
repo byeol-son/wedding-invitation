@@ -5,4 +5,5 @@
 .Spotlight-V100
 .Trashes
 
-# 이미지 파일은 커밋에 포함 (사용자가 직접 관리)
+# 이미지는 Firebase Storage에서 서빙, git 추적 제외
+images/

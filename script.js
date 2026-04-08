@@ -377,7 +377,7 @@ function initGallery(){
   const imgs = INVITE.gallery.images || [];
   if(!mount) return;
   mount.innerHTML = "";
-  const thumbPaths = imgs.map(f => `./images/gallery/${f}`);   // 저화질 (GitHub Pages)
+  const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 저화질 (Firebase Storage)
   const hqPaths    = imgs.map(f => firebaseUrl(f));             // 고화질 (Firebase Storage)
 
   // 고화질 Image 객체 캐시 (한 번 받으면 재사용)
