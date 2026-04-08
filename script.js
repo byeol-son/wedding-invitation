@@ -362,6 +362,30 @@ function firebaseUrl(filename) {
   return FIREBASE_STORAGE_BASE + encodeURIComponent(filename) + "?alt=media";
 }
 
+// 히어로 배경 이미지를 Firebase에서 로드
+async function initHeroImage() {
+  const heroBg = document.querySelector('.hero__bg');
+  if (!heroBg) return;
+
+  try {
+    const imageUrl = firebaseUrl('TJ_00994_(2).jpg');
+    console.log('🖼️ 히어로 이미지 로드 시도:', imageUrl);
+
+    // 이미지가 실제로 존재하는지 확인
+    const img = new Image();
+    img.onload = () => {
+      heroBg.style.backgroundImage = `url("${imageUrl}")`;
+      console.log('✅ 히어로 이미지 로드 완료!');
+    };
+    img.onerror = () => {
+      console.warn('⚠️ 히어로 이미지를 찾을 수 없습니다:', imageUrl);
+    };
+    img.src = imageUrl;
+  } catch (e) {
+    console.error('❌ 히어로 이미지 로드 실패:', e);
+  }
+}
+
 async function initGallery(){
   const mount = $("#gallery");
   if(!mount) return;
@@ -891,7 +915,7 @@ function toggleMusic() {
 
 function main(){
   initHero(); initNames(); initCalendar(); initCountdown(); initVenue();
-  initContacts(); initRSVP(); initGallery(); initShare();
+  initHeroImage(); initContacts(); initRSVP(); initGallery(); initShare();
   initMusic();
   
   // 신랑 측 계좌 통합
