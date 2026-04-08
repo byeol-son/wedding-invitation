@@ -377,7 +377,14 @@ async function initGallery(){
     imgs = (data.items || [])
       .map(item => item.name.split('/').pop())
       .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
-      .sort();
+      .sort((a, b) => {
+        // TJ_로 시작하는 파일을 앞에, 숫자만 있는 파일을 뒤에 배치
+        const aHasTJ = a.startsWith('TJ_');
+        const bHasTJ = b.startsWith('TJ_');
+        if (aHasTJ && !bHasTJ) return -1;  // TJ_가 우선
+        if (!aHasTJ && bHasTJ) return 1;
+        return a.localeCompare(b);          // 같은 카테고리면 알파벳순
+      });
     console.log('📸 필터링 후:', imgs.length, '개 이미지');
   } catch(e) {
     console.error('❌ 갤러리 목록 로드 실패:', e);
