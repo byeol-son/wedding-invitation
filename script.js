@@ -420,8 +420,8 @@ async function initGallery(){
   mount.innerHTML = "";
   console.log('📸 mount cleared');
 
-  const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 저화질 (Firebase Storage)
-  const hqPaths    = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 고화질 (Firebase Storage)
+  const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media&w=500`);  // 저화질 (500px, Firebase Storage)
+  const hqPaths    = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 고화질 (원본, Firebase Storage)
 
   console.log('📸 첫 번째 URL:', thumbPaths[0]);
 
@@ -956,23 +956,9 @@ window.addEventListener('scroll', () => {
   if (progressBar) progressBar.style.width = scrolled + '%';
 });
 
-// 2. 떨어지는 꽃잎 파티클
+// 2. 떨어지는 꽃잎 파티클 (비활성화)
 function createPetals() {
-  const petals = ['🌸', '🌺', '💐', '🌹'];
-  console.log('🌸 꽃잎 파티클 시작!');
-
-  setInterval(() => {
-    const petal = document.createElement('div');
-    petal.className = 'petal';
-    petal.textContent = petals[Math.floor(Math.random() * petals.length)];
-    petal.style.left = Math.random() * 100 + '%';
-    const duration = 4 + Math.random() * 2;
-    petal.style.animationDuration = duration + 's';
-    petal.style.animationDelay = Math.random() * 0.5 + 's';
-    document.body.appendChild(petal);
-
-    setTimeout(() => petal.remove(), (duration + 0.5) * 1000);
-  }, 2000); // 꽃잎 생성 빈도 2초 간격
+  // 꽃잎 파티클 비활성화
 }
 
 // 3. 별/촛불 배경 파티클
