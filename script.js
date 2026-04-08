@@ -68,18 +68,8 @@ const INVITE = {
     ],
   },
 
-  // ========== 갤러리 사진 ==========
-  gallery: {
-    images: [
-      "TJ_00067.jpg", "TJ_00097_(2).jpg", "TJ_00125.jpg", "TJ_00141.jpg", 
-      "TJ_00157.jpg", "TJ_00219.jpg", "TJ_00448_(2).jpg", "TJ_00544.jpg", 
-      "TJ_00726.jpg", "TJ_00840.jpg", "TJ_00956.jpg", "TJ_01002.jpg",
-      "TJ_01104.jpg", "TJ_01162.jpg", "TJ_01200.jpg", "TJ_01465.jpg",
-      "TJ_01615.jpg", "TJ_01634.jpg", "TJ_01723.jpg", "TJ_01737.jpg", 
-      "TJ_01791_(2).jpg", "TJ_01837_(2).jpg", "TJ_01843.jpg",
-      "01.jpg", "02.jpg", "04.jpg", "05.jpg", "07.jpg"
-    ],
-  },
+  // ========== 갤러리 사진 (Firebase Storage에서 자동 로드) ==========
+  gallery: {},
 
   // ========== 배경 음악 (YouTube) ==========
   music: {
@@ -372,10 +362,25 @@ function firebaseUrl(filename) {
   return FIREBASE_STORAGE_BASE + encodeURIComponent(filename) + "?alt=media";
 }
 
-function initGallery(){
+async function initGallery(){
   const mount = $("#gallery");
-  const imgs = INVITE.gallery.images || [];
   if(!mount) return;
+
+  // Firebase Storage에서 gallery 폴더 파일 목록 자동 로드
+  let imgs = [];
+  try {
+    const { initializeApp, getApps } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
+    const { getStorage, ref, listAll } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js');
+    const app = getApps().length ? getApps()[0] : initializeApp(INVITE.firebase);
+    const storage = getStorage(app);
+    const folderRef = ref(storage, 'wedding/gallery');
+    const result = await listAll(folderRef);
+    imgs = result.items.map(item => item.name).sort();
+  } catch(e) {
+    console.error('갤러리 목록 로드 실패:', e);
+    return;
+  }
+
   mount.innerHTML = "";
   const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 저화질 (Firebase Storage)
   const hqPaths    = imgs.map(f => firebaseUrl(f));             // 고화질 (Firebase Storage)
