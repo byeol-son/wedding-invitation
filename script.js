@@ -368,8 +368,8 @@ async function initHeroImage() {
   if (!heroBg) return;
 
   try {
-    // 파일명에 특수문자가 있으므로 직접 경로 지정
-    const imageUrl = FIREBASE_STORAGE_BASE + 'TJ_00994_%282%29.jpg' + '?alt=media';
+    // Firebase Storage에서 직접 제공한 URL (token 포함)
+    const imageUrl = 'https://firebasestorage.googleapis.com/v0/b/wedding-invitation-2bbaf.firebasestorage.app/o/wedding%2FTJ_00994_(2).jpg?alt=media&token=edec80a0-99a6-41f7-a7f8-b838c73a733d';
     console.log('🖼️ 히어로 이미지 로드 시도:', imageUrl);
 
     // 이미지가 실제로 존재하는지 확인
