@@ -758,11 +758,16 @@ body{
   opacity: 0;
   transform: scale(0.85) translateY(20px);
   transition: opacity 500ms var(--ease-out),
-              transform 500ms var(--ease-out);
+              transform 500ms var(--ease-out),
+              filter 300ms ease;
 }
 .lightbox[aria-hidden="false"] .lightbox__img{
   opacity: 1;
   transform: scale(1) translateY(0);
+}
+.lightbox__img.is-loading{
+  filter: blur(6px);
+  opacity: 0.7;
 }
 .lightbox__close{
   position:absolute;

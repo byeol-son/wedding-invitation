@@ -380,11 +380,23 @@ function initGallery(){
   const thumbPaths = imgs.map(f => `./images/gallery/${f}`);   // 저화질 (GitHub Pages)
   const hqPaths    = imgs.map(f => firebaseUrl(f));             // 고화질 (Firebase Storage)
 
+  // 고화질 Image 객체 캐시 (한 번 받으면 재사용)
+  const hqCache = new Array(imgs.length).fill(null);
+
+  function preloadHQ(idx) {
+    if (hqCache[idx]) return; // 이미 로드됨
+    const image = new Image();
+    image.src = hqPaths[idx];
+    hqCache[idx] = image;
+  }
+
   thumbPaths.forEach((src, idx) => {
     const img = document.createElement("img");
     img.className = "gallery__img stagger-item";
     img.src = src;
     img.loading = "lazy";
+    // 마우스 hover 시 고화질 미리 받기 (데스크탑)
+    img.addEventListener("mouseenter", () => preloadHQ(idx));
     img.addEventListener("click", () => openLightbox(idx));
     mount.appendChild(img);
   });
@@ -393,15 +405,47 @@ function initGallery(){
   const lbImg = $("#lbImg");
   let current = 0;
 
-  function openLightbox(idx){
-    current = idx;
-    lbImg.src = hqPaths[current];   // 라이트박스는 고화질
-    lb.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+  function loadHQInto(idx) {
+    // 캐시에 완료된 이미지가 있으면 즉시 반환
+    if (hqCache[idx] && hqCache[idx].complete) return hqCache[idx];
+    const hq = hqCache[idx] || new Image();
+    hqCache[idx] = hq;
+    if (!hq.src) hq.src = hqPaths[idx];
+    return hq;
   }
+
+  function showAt(idx, openLightbox = false) {
+    current = idx;
+    // 1) 저화질 즉시 표시 + 로딩 blur
+    lbImg.src = thumbPaths[current];
+    lbImg.classList.add("is-loading");
+    if (openLightbox) {
+      lb.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    // 2) 고화질 로드 완료 시 교체 (blur 제거)
+    const hq = loadHQInto(idx);
+    const swap = () => {
+      if (current === idx) {
+        lbImg.src = hq.src;
+        lbImg.classList.remove("is-loading");
+      }
+    };
+    if (hq.complete) swap();
+    else hq.onload = swap;
+
+    // 3) 인접 사진 미리 받기
+    preloadHQ((idx + 1) % imgs.length);
+    preloadHQ((idx - 1 + imgs.length) % imgs.length);
+  }
+
+  function openLightbox(idx) { showAt(idx, true); }
+  function showLightboxAt(idx) { showAt(idx, false); }
+
   $("#lbClose").addEventListener("click", () => { lb.setAttribute("aria-hidden", "true"); document.body.style.overflow = ""; });
-  $("#lbPrev").addEventListener("click", () => { current = (current - 1 + hqPaths.length) % hqPaths.length; lbImg.src = hqPaths[current]; });
-  $("#lbNext").addEventListener("click", () => { current = (current + 1) % hqPaths.length; lbImg.src = hqPaths[current]; });
+  $("#lbPrev").addEventListener("click", () => showLightboxAt((current - 1 + hqPaths.length) % hqPaths.length));
+  $("#lbNext").addEventListener("click", () => showLightboxAt((current + 1) % hqPaths.length));
 }
 
 function initShare(){
