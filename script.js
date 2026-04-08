@@ -366,16 +366,16 @@ async function initGallery(){
   const mount = $("#gallery");
   if(!mount) return;
 
-  // Firebase Storage에서 gallery 폴더 파일 목록 자동 로드
+  // Firebase Storage REST API로 gallery 폴더 파일 목록 로드 (SDK 불필요)
   let imgs = [];
   try {
-    const { initializeApp, getApps } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js');
-    const { getStorage, ref, listAll } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js');
-    const app = getApps().length ? getApps()[0] : initializeApp(INVITE.firebase);
-    const storage = getStorage(app);
-    const folderRef = ref(storage, 'wedding/gallery');
-    const result = await listAll(folderRef);
-    imgs = result.items.map(item => item.name).sort();
+    const bucket = INVITE.firebase.storageBucket;
+    const res = await fetch(`https://firebasestorage.googleapis.com/v0/b/${bucket}/o?prefix=wedding%2Fgallery%2F`);
+    const data = await res.json();
+    imgs = (data.items || [])
+      .map(item => item.name.split('/').pop())
+      .filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f))
+      .sort();
   } catch(e) {
     console.error('갤러리 목록 로드 실패:', e);
     return;
