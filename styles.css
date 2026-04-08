@@ -1288,3 +1288,168 @@ body{
 .transportText{
   white-space: pre-line;
 }
+
+/* ============================================
+   감성 애니메이션 (Aesthetic Animations)
+   ============================================ */
+
+/* 1. 스크롤 진행도 바 */
+#scrollProgress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-light));
+  width: 0%;
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px rgba(184, 159, 122, 0.5);
+}
+
+/* 2. 꽃잎 파티클 */
+.petal {
+  position: fixed;
+  pointer-events: none;
+  font-size: 32px;
+  opacity: 0.7;
+  animation: fall linear forwards;
+  z-index: 10;
+  top: -50px;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(calc(100vh + 50px)) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 3. 별/촛불 파티클 배경 */
+.starfield {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* 4. 마우스 추적 라이팅 */
+#mouseLight {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 213, 196, 0.3) 0%, rgba(232, 213, 196, 0) 70%);
+  width: 300px;
+  height: 300px;
+  margin: -150px 0 0 -150px;
+  z-index: 2;
+  filter: blur(40px);
+}
+
+/* 5. 섹션 배경 그라데이션 (비활성화 - 기존 배경색 유지) */
+.section {
+  position: relative;
+}
+
+/* 6. 이미지 호버 라이트 효과 */
+.gallery__img {
+  position: relative;
+  transition: all 0.4s ease;
+}
+
+.gallery__img:hover {
+  filter: brightness(1.15) drop-shadow(0 0 15px rgba(184, 159, 122, 0.5));
+}
+
+/* 7. Confetti 파티클 */
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(100vh) rotateZ(360deg);
+    opacity: 0;
+  }
+}
+
+.confetti {
+  animation: confettiFall 2.5s ease-in forwards;
+}
+
+/* 8. 페이지 인트로 애니메이션 */
+.hero__script {
+  opacity: 0;
+}
+
+.hero__script.typing {
+  animation: textReveal 0.6s ease-out forwards;
+}
+
+@keyframes textReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 타이핑 커서 효과 */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: var(--text);
+  margin-left: 4px;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.hero__names {
+  opacity: 0;
+}
+
+.hero__names.typing {
+  animation: textReveal 0.6s ease-out forwards;
+}
+
+/* 9. 스무스 스크롤 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 10. 버튼 사운드 시각화 */
+.btn:active {
+  animation: buttonPulse 0.3s ease-out;
+}
+
+@keyframes buttonPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}

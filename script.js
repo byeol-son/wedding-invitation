@@ -918,3 +918,177 @@ function main(){
 }
 
 document.addEventListener("DOMContentLoaded", main);
+
+// ============================================
+// 감성 기능들 (Aesthetic Features)
+// ============================================
+
+// 1. 스크롤 진행도 바
+window.addEventListener('scroll', () => {
+  const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = (window.scrollY / scrollHeight) * 100;
+  const progressBar = document.getElementById('scrollProgress');
+  if (progressBar) progressBar.style.width = scrolled + '%';
+});
+
+// 2. 떨어지는 꽃잎 파티클
+function createPetals() {
+  const petals = ['🌸', '🌺', '💐', '🌹'];
+  console.log('🌸 꽃잎 파티클 시작!');
+
+  setInterval(() => {
+    const petal = document.createElement('div');
+    petal.className = 'petal';
+    petal.textContent = petals[Math.floor(Math.random() * petals.length)];
+    petal.style.left = Math.random() * 100 + '%';
+    const duration = 4 + Math.random() * 2;
+    petal.style.animationDuration = duration + 's';
+    petal.style.animationDelay = Math.random() * 0.5 + 's';
+    document.body.appendChild(petal);
+
+    setTimeout(() => petal.remove(), (duration + 0.5) * 1000);
+  }, 1000); // 꽃잎 수 반으로 줄임 (500ms -> 1000ms)
+}
+
+// 3. 별/촛불 배경 파티클
+function createStars() {
+  const starfield = document.getElementById('starfield');
+  if (!starfield) return;
+
+  for (let i = 0; i < 30; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDelay = Math.random() * 3 + 's';
+    starfield.appendChild(star);
+  }
+}
+
+// 4. 마우스 추적 라이팅
+document.addEventListener('mousemove', (e) => {
+  const light = document.getElementById('mouseLight');
+  if (light) {
+    light.style.left = e.clientX + 'px';
+    light.style.top = e.clientY + 'px';
+  }
+});
+
+// 5. 섹션별 배경 그라데이션 (비활성화)
+function applySectionGradients() {
+  // 그라데이션 배경 비활성화 - 기존 배경색 유지
+}
+
+// 6. Confetti 폭죽 효과
+function createConfetti() {
+  const colors = ['#b89f7a', '#e8d5c4', '#ffd700', '#ff69b4', '#dda0dd'];
+  const confettiCount = 50;
+
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * window.innerWidth + 'px';
+    confetti.style.top = window.innerHeight / 2 + 'px';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.width = (Math.random() * 10 + 5) + 'px';
+    confetti.style.height = (Math.random() * 10 + 5) + 'px';
+    confetti.style.borderRadius = '50%';
+    confetti.style.opacity = Math.random() * 0.8 + 0.5;
+
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 2500);
+  }
+}
+
+// 7. 방명록 제출 성공시 Confetti
+const originalSubmitGuestbook = window.submitGuestbook;
+if (originalSubmitGuestbook) {
+  window.submitGuestbook = async function() {
+    const result = await originalSubmitGuestbook.call(this);
+    if (result !== false) {
+      createConfetti();
+    }
+    return result;
+  };
+}
+
+// 8. 사운드 피드백 함수
+function playSound(type = 'click') {
+  // Web Audio API를 사용한 간단한 톤 생성
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+
+  if (type === 'click') {
+    oscillator.frequency.value = 800;
+    gain.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  } else if (type === 'success') {
+    oscillator.frequency.value = 1000;
+    gain.gain.setValueAtTime(0.1, audioContext.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.2);
+  }
+}
+
+// 9. 모든 버튼에 사운드 추가
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.btn')) {
+    playSound('click');
+  }
+});
+
+// 타이핑 효과 함수
+function typeText(element, text, speed = 50) {
+  return new Promise((resolve) => {
+    element.textContent = '';
+    let index = 0;
+
+    const type = () => {
+      if (index < text.length) {
+        element.textContent += text[index];
+        index++;
+        setTimeout(type, speed);
+      } else {
+        resolve();
+      }
+    };
+
+    type();
+  });
+}
+
+// 10. 페이지 로드 완료 인트로 애니메이션
+window.addEventListener('load', () => {
+  const heroScript = document.querySelector('.hero__script');
+  const heroNames = document.querySelector('.hero__names');
+
+  if (heroScript) {
+    const scriptText = heroScript.textContent;
+    setTimeout(async () => {
+      heroScript.classList.add('typing');
+      await typeText(heroScript, scriptText, 40);
+      console.log('✍️ 제목 타이핑 완료!');
+    }, 300);
+  }
+
+  if (heroNames) {
+    // 이름은 고정으로 유지
+    heroNames.classList.add('typing');
+    console.log('✍️ 이름 고정 표시');
+  }
+});
+
+// 모든 감성 기능 초기화
+window.addEventListener('load', () => {
+  createPetals();
+  createStars();
+  applySectionGradients();
+  console.log('✨ 감성 기능들이 활성화되었습니다!');
+});
