@@ -421,7 +421,7 @@ async function initGallery(){
   console.log('📸 mount cleared');
 
   const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 저화질 (갤러리)
-  const hqPaths    = imgs.map(f => firebaseUrl(f));  // 고화질 (lightbox)
+  const hqPaths    = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 고화질 (lightbox)
 
   console.log('📸 첫 번째 URL:', thumbPaths[0]);
 
