@@ -368,7 +368,8 @@ async function initHeroImage() {
   if (!heroBg) return;
 
   try {
-    const imageUrl = firebaseUrl('TJ_00994_(2).jpg');
+    // 파일명에 특수문자가 있으므로 직접 경로 지정
+    const imageUrl = FIREBASE_STORAGE_BASE + 'TJ_00994_%282%29.jpg' + '?alt=media';
     console.log('🖼️ 히어로 이미지 로드 시도:', imageUrl);
 
     // 이미지가 실제로 존재하는지 확인
