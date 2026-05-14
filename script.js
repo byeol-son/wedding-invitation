@@ -396,7 +396,7 @@ async function initGallery(){
   try {
     const bucket = INVITE.firebase.storageBucket;
     console.log('📸 갤러리 초기화 시작 (Firebase)...');
-    const res = await fetch(`https://firebasestorage.googleapis.com/v0/b/${bucket}/o?prefix=wedding%2Fgallery%2F`);
+    const res = await fetch(`https://firebasestorage.googleapis.com/v0/b/${bucket}/o?prefix=wedding%2F`);
     const data = await res.json();
     console.log('📸 Firebase API 응답:', data.items?.length || 0, '개 이미지 발견');
     imgs = (data.items || [])
@@ -420,7 +420,7 @@ async function initGallery(){
   mount.innerHTML = "";
   console.log('📸 mount cleared');
 
-  const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 저화질 (갤러리)
+  const thumbPaths = imgs.map(f => `${FIREBASE_STORAGE_BASE}${encodeURIComponent(f)}?alt=media`);  // 저화질 (갤러리)  // 저화질 (갤러리)
   const hqPaths    = imgs.map(f => `${FIREBASE_STORAGE_BASE}gallery%2F${encodeURIComponent(f)}?alt=media`);  // 고화질 (lightbox)
 
   console.log('📸 첫 번째 URL:', thumbPaths[0]);
